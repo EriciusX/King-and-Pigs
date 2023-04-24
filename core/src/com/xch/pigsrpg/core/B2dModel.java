@@ -29,7 +29,7 @@ public class B2dModel {
     private Sound hammering;
     private MapObject human, door1, door2;
     public TiledMapTileLayer Walllayer;
-    public boolean human_run = false, human_attack = false, human_jump = false, human_din = false, human_dout;
+    public boolean human_run = false, human_attack = false, human_jump = false, human_din = false, human_dout = false;
     private boolean left = true, right = true, up = true, jump_delay = false, left_delay = false, right_delay = false;
     public int human_jump_count = 0;
     private float delay = 0, jumpTimeCounter;
@@ -49,7 +49,6 @@ public class B2dModel {
         // add a player
         player = bodyFactory.makeBoxPolyBody((float) human.getProperties().get("x"), (float) human.getProperties().get("y")+14, 38, 28, BodyFactory.HUMAN, BodyType.DynamicBody,false);
         player.setBullet(true);
-        human_dout = true;
         MainScreen.resetStateTime();
     }
     private void loadAssets() {
@@ -143,7 +142,7 @@ public class B2dModel {
             human_jump_count = 1;
         }
         //进门
-        if ((Math.abs((player.getPosition().x) - (float) door2.getProperties().get("x")) <= 15) && !human_jump && !human_run && !human_din) {
+        if ((Math.abs((player.getPosition().x) - (float) door2.getProperties().get("x")) <= 15) && !human_jump && !human_run && !human_din && controller.entry) {
             MainScreen.resetStateTime();
             player.setLinearVelocity(0,0);
             human_din = true;

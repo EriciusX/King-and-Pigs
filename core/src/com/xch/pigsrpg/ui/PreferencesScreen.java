@@ -18,14 +18,9 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class PreferencesScreen implements Screen {
     private Pigsrpg parent;
-    private Stage stage;
-    private Label titleLabel;
-    private Label volumeSoundLabel;
-    private Label volumeMusicLabel;
-    private Label musicOnOffLabel;
-    private Label soundOnOffLabel;
+    private final Stage stage;
     private Skin skin;
-    public PreferencesScreen(Pigsrpg pigsrpg){
+    public PreferencesScreen(Pigsrpg pigsrpg, int level){
         parent = pigsrpg;
         stage = new Stage(new ScreenViewport());
     }
@@ -103,12 +98,14 @@ public class PreferencesScreen implements Screen {
             }
         });
 
-        titleLabel = new Label( "Preferences", skin );
-        volumeMusicLabel = new Label("Music Volume", skin);
-        volumeSoundLabel = new Label( "Sound Volume", skin);
-        musicOnOffLabel = new Label( "Music Effect", skin);
-        soundOnOffLabel = new Label( "Sound Effect", skin);
+        // titles
+        final Label titleLabel = new Label("Preferences", skin);
+        final Label volumeMusicLabel = new Label("Music Volume", skin);
+        final Label volumeSoundLabel = new Label( "Sound Volume", skin);
+        final Label musicOnOffLabel = new Label( "Music Effect", skin);
+        final Label soundOnOffLabel = new Label( "Sound Effect", skin);
 
+        // table
         table.add(titleLabel).colspan(2);
         table.row().pad(10,0,0,10);
         table.add(volumeMusicLabel).left();

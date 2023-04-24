@@ -1,95 +1,87 @@
 package com.xch.pigsrpg.ui;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.xch.pigsrpg.core.Pigsrpg;
-
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.xch.pigsrpg.core.Pigsrpg;
 
-
-public class MenuScreen implements Screen {
+public class MapSelectScreen extends InputAdapter implements Screen {
     private Pigsrpg parent;
     private Stage stage;
     private Skin skin;
-    public MenuScreen(Pigsrpg pigsrpg){
+    private Label titleLabel;
+    public MapSelectScreen(Pigsrpg pigsrpg){
         parent = pigsrpg;
         stage = new Stage(new ScreenViewport());
     }
 
     @Override
     public void show() {
-        // TODO Auto-generated method stub
-        // Create a table that fills the screen. Everything else will go inside this table.
         Gdx.input.setInputProcessor(stage);
 
         Table table = new Table();
-        table.defaults().width(500);
         table.setFillParent(true);
         table.setDebug(false);
 
         parent.assMan.queueAddSkin();
         parent.assMan.manager.finishLoading();
         skin = parent.assMan.manager.get("UI/golden/golden-ui-skin.json");
+        // stage 1
+        final TextButton stage1 = new TextButton("1", skin);
+        stage1.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("Map 1");
+                parent.levelMap = 1;
+                parent.changeScreen(Pigsrpg.MENU);
+            }
+        });
 
-        TextButton newGame = new TextButton("New Game", skin);
-        TextButton preferences = new TextButton("Preferences", skin);
-        TextButton exit = new TextButton("Exit", skin);
-        TextButton stageSelect = new TextButton("Stage Select", skin);
+        // stage 2
+        final TextButton stage2 = new TextButton("2", skin);
+        stage2.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                System.out.println("Map 2");
+                parent.levelMap = 2;
+                parent.changeScreen(Pigsrpg.MENU);
+            }
+        });
 
-        table.add(newGame).fillX().uniformX();
-        table.row().pad(10, 0, 10, 0);
-        table.add(stageSelect).fillX().uniformX();
+        // back to menu
+        final TextButton backButton = new TextButton("Back", skin); // the extra argument here "small" is used to set the button to the smaller version instead of the big default version
+        backButton.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                parent.changeScreen(Pigsrpg.MENU);
+            }
+        });
+
+        titleLabel = new Label( "Stage Select", skin );
+
+        table.add(titleLabel).colspan(2);
+        table.row().pad(10,0,0,10);
+        table.add(stage1).width(250);
+        table.add(stage2).width(250);
         table.row();
-        table.add(preferences).fillX().uniformX();
-        table.row();
-        table.add(exit).fillX().uniformX();
+        table.add(backButton).colspan(2).fillX();
         stage.addActor(table);
-
-        exit.addListener(new ChangeListener(){
-            @Override
-            public void changed(ChangeEvent event, Actor actor){
-                Gdx.app.exit();
-            }
-        });
-
-        newGame.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(Pigsrpg.APPLICATION);
-            }
-        });
-
-        stageSelect.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(Pigsrpg.MapSelect);
-            }
-        });
-
-        preferences.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                parent.changeScreen(Pigsrpg.PREFERENCES);
-            }
-        });
     }
 
     @Override
     public void render(float delta) {
+
         Gdx.gl.glClearColor(0f, 0.2f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+
     }
 
     @Override
@@ -99,14 +91,17 @@ public class MenuScreen implements Screen {
 
     @Override
     public void pause() {
+
     }
 
     @Override
     public void resume() {
+
     }
 
     @Override
     public void hide() {
+
     }
 
     @Override
@@ -114,4 +109,5 @@ public class MenuScreen implements Screen {
         skin.dispose();
         stage.dispose();
     }
+
 }

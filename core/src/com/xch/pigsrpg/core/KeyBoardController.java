@@ -5,7 +5,7 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.math.Vector2;
 
 public class KeyBoardController implements InputProcessor {
-    public boolean left, right, up, down, jump, attack;
+    public boolean left, right, up, down, jump, attack, entry, escape;
     public boolean isMouse1Down, isMouse2Down,isMouse3Down;
     public boolean isDragged, isSpaceDown = false;
     public final Vector2 mouseLocation = new Vector2();
@@ -41,6 +41,12 @@ public class KeyBoardController implements InputProcessor {
                 break;
             case Keys.J:
                 attack = true;
+                keyProcessed = true;
+            case Keys.E:
+                entry = true;
+                keyProcessed = true;
+            case Keys.ESCAPE:
+                escape = true;
                 keyProcessed = true;
         }
         return keyProcessed;
@@ -78,6 +84,12 @@ public class KeyBoardController implements InputProcessor {
                 break;
             case Keys.J:
                 attack = false;
+                keyProcessed = true;
+            case Keys.E:
+                entry = false;
+                keyProcessed = true;
+            case Keys.ESCAPE:
+                escape = false;
                 keyProcessed = true;
         }
         return keyProcessed;	//  return our peyProcessed flag

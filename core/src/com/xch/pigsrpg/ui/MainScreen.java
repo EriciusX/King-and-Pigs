@@ -15,27 +15,39 @@ import com.xch.pigsrpg.core.B2dModel;
 import com.xch.pigsrpg.core.KeyBoardController;
 import com.badlogic.gdx.Screen;
 import com.xch.pigsrpg.core.Pigsrpg;
-
 import java.awt.*;
 
 public class MainScreen implements Screen {
     private Pigsrpg parent;
-    private B2dModel model;
-    protected OrthographicCamera cam, hudcam;
+    private static B2dModel model;
+    protected static OrthographicCamera cam;
+    protected OrthographicCamera hudcam;
     private KeyBoardController controller;
-    private Box2DDebugRenderer debugRenderer;
+    private static Box2DDebugRenderer debugRenderer;
     private TextureAtlas atlas;
-    protected SpriteBatch sb;
-    private TextureRegion jumpTex, jumpingTex, downTex;
-    private Animation idleAnimation, runAnimation, attackAnimation, dinAnimation, doutAnimation;
-    private TextureRegion currentFrame;
+    protected static SpriteBatch sb;
+    private static TextureRegion jumpTex;
+    private static TextureRegion jumpingTex;
+    private static TextureRegion downTex;
+    private static Animation idleAnimation;
+    private static Animation runAnimation;
+    private static Animation attackAnimation;
+    private static Animation dinAnimation;
+    private static Animation doutAnimation;
+    private static TextureRegion currentFrame;
     private TiledMap map;
-    private MapRenderer mapRenderer;
+    private static MapRenderer mapRenderer;
     private MapObjects objects;
     private MapObject human;
+    private static final int GAME_RUNNING = 0;
+    private static final int GAME_PAUSED = 1;
+    private static final int GAME_OVER = 2;
+    private static final int GAME_LEVEL_END = 3;
+    private int gameState = 0;
     private static float stateTime, totalTimeCount;
-    private BitmapFont font = new BitmapFont();
+    private static BitmapFont font = new BitmapFont();
     public MainScreen(Pigsrpg pigsrpg){
+        // init
         parent = pigsrpg;
         cam = parent.getCamera();
         hudcam = parent.getHudCamera();
@@ -44,9 +56,11 @@ public class MainScreen implements Screen {
         model = new B2dModel(controller, cam, parent.assMan);
         debugRenderer = new Box2DDebugRenderer(true,true,true,true,true,true);
 
+        // assets
         parent.assMan.queueAddImages();
         parent.assMan.manager.finishLoading();
 
+        // animation
         atlas = parent.assMan.manager.get("human/humanking.atlas");
         jumpTex = atlas.findRegion("Jump");
         jumpingTex = atlas.findRegion("Fall");
@@ -57,8 +71,8 @@ public class MainScreen implements Screen {
         dinAnimation = new Animation(0.15f, atlas.findRegions("din"), Animation.PlayMode.NORMAL);
         doutAnimation = new Animation(0.15f, atlas.findRegions("dout"), Animation.PlayMode.NORMAL);
 
-
-        map = parent.assMan.manager.get("map/1.tmx");
+        // map
+        map = parent.assMan.manager.get(("".format("map/%d.tmx", parent.levelMap)));
         MapLayer layer = map.getLayers().get("对象层 1");
         objects = layer.getObjects();
         human = objects.get("humanking2");
@@ -70,13 +84,13 @@ public class MainScreen implements Screen {
         cam.update();
     }
 
-    private void drawHuman(){
-        //run
+    private static void drawHuman(){
+        // run
         if (model.human_run) {
             currentFrame = (TextureRegion) runAnimation.getKeyFrame(stateTime);
             sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
         }
-        //jump
+        // jump
         else if (model.human_jump){
             if (model.human_jump_count == 2) {
                 sb.draw(jumpTex, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
@@ -98,7 +112,7 @@ public class MainScreen implements Screen {
                 model.human_jump = false;
             }
         }
-        //attack
+        // attack
         else if (model.human_attack) {
             currentFrame = (TextureRegion) attackAnimation.getKeyFrame(stateTime);
             sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
@@ -106,7 +120,7 @@ public class MainScreen implements Screen {
                 model.human_attack = false;
             }
         }
-        //din
+        // din
         else if (model.human_din) {
             currentFrame = (TextureRegion) dinAnimation.getKeyFrame(stateTime);
             sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
@@ -114,7 +128,7 @@ public class MainScreen implements Screen {
                 model.human_din = false;
             }
         }
-        //dout
+        // dout
         else if (model.human_dout) {
             currentFrame = (TextureRegion) doutAnimation.getKeyFrame(stateTime);
             sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
@@ -122,7 +136,7 @@ public class MainScreen implements Screen {
                 model.human_dout = false;
             }
         }
-        //idle
+        // idle
         else {
             currentFrame = (TextureRegion) idleAnimation.getKeyFrame(stateTime);
             sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
@@ -138,25 +152,45 @@ public class MainScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        //模型逻辑
+        // background
+        Gdx.gl.glClearColor(0.24f,0.219f,0.317f,1);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        // mapRender
+        mapRenderer.setView(cam);
+        mapRenderer.render();
+
+        // date
         stateTime += delta;
         totalTimeCount += delta;
-        model.logicStep(delta);
-        //相机跟随角色
+
+        //debug render
+        debugRenderer.render(model.world, cam.combined);
+
+        // Cam
         cam.position.x = model.player.getPosition().x-19;
         cam.position.y = model.player.getPosition().y-14;
         cam.update();
-        //地图实时渲染
-        mapRenderer.setView(cam);
-        mapRenderer.render();
-        //绘制图像
+
+        // Draw Sb
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
         drawHuman();
-        //font.draw(sb, "FPS = " + 1 / (delta), cam.position.x - 100, cam.position.y + 100);
+
+        font.draw(sb, "FPS = " + 1 / (delta), cam.position.x - 100, cam.position.y + 100);
         sb.end();
-        //debug渲染
-        debugRenderer.render(model.world, cam.combined);
+
+        switch  (gameState) {
+            case GAME_RUNNING:
+                setGameRunning(delta);
+            case GAME_PAUSED:
+                setGamePaused(delta);
+            case GAME_OVER:
+                setGameOver(delta);
+            case GAME_LEVEL_END:
+                setGameLevelEnd(delta);
+        }
     }
 
     @Override
@@ -179,6 +213,21 @@ public class MainScreen implements Screen {
     @Override
     public void dispose() {
         sb.dispose();
+    }
+
+    public static void setGameRunning(float delta) {
+        // Logic
+        model.logicStep(delta);
+    }
+
+    public static void setGamePaused(float delta) {
+
+    }
+    public static void setGameOver(float delta) {
+
+    }
+    public static void setGameLevelEnd(float delta) {
+
     }
 
     public static void resetStateTime(){

@@ -27,8 +27,8 @@ public class LoadingScreen implements Screen {
     public final int SOUND = 3;		// loading sounds
     public final int MUSIC = 4;		// loading music
     public float countDown = 5f; // 5 seconds of waiting before menu screen
+    private Table loadingTable = new Table();
     private int currentLoadingStage = 0;
-    private Table loadingTable;
     private Stage stage;
     public LoadingScreen(Pigsrpg pigsrpg){
         parent = pigsrpg;
@@ -64,7 +64,6 @@ public class LoadingScreen implements Screen {
         table.setDebug(false);
         table.setBackground(new TiledDrawable(background));
 
-        loadingTable = new Table();
         loadingTable.add(new LoadingBarPart(dash,flameAnimation));
         loadingTable.add(new LoadingBarPart(dash,flameAnimation));
         loadingTable.add(new LoadingBarPart(dash,flameAnimation));
@@ -93,11 +92,7 @@ public class LoadingScreen implements Screen {
 
         if (parent.assMan.manager.update()) { // Load some, will return true if done loading
             currentLoadingStage += 1;
-            if(currentLoadingStage <= 5){
-                loadingTable.getCells().get((currentLoadingStage-1)*2).getActor().setVisible(true);  // new
-                loadingTable.getCells().get((currentLoadingStage-1)*2+1).getActor().setVisible(true);
-            }
-            switch(currentLoadingStage){
+            switch(currentLoadingStage) {
                 case FONT:
                     System.out.println("Loading fonts....");
                     parent.assMan.queueAddFonts();
@@ -118,20 +113,26 @@ public class LoadingScreen implements Screen {
                     System.out.println("Finished");
                     break;
             }
-            if (currentLoadingStage >5){
+            if (currentLoadingStage > 5) {
                 countDown -= delta;
                 currentLoadingStage = 5;
-                if(countDown < 0){
+                if (countDown < 0) {
                     parent.changeScreen(Pigsrpg.MENU);
                 }
             }
+            if (currentLoadingStage <= 5) {
+                loadingTable.getCells().get((currentLoadingStage - 1) * 2).getActor().setVisible(true);
+                loadingTable.getCells().get((currentLoadingStage - 1) * 2 + 1).getActor().setVisible(true);
+            }
+            stage.act();
+            stage.draw();
         }
-        stage.act();
-        stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
+        // TODO Auto-generated method stub
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -148,6 +149,6 @@ public class LoadingScreen implements Screen {
 
     @Override
     public void dispose() {
+        stage.dispose();
     }
-
 }
