@@ -14,6 +14,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TiledDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.xch.pigsrpg.core.Pigsrpg;
+import com.xch.pigsrpg.tool.FileTool;
+
+import java.nio.file.FileSystems;
 
 public class LoadingScreen implements Screen {
     private Pigsrpg parent;
@@ -52,6 +55,9 @@ public class LoadingScreen implements Screen {
         background = atlas.findRegion("flamebackground");
         copyright = atlas.findRegion("copyright");
         flameAnimation = new Animation(0.07f, atlas.findRegions("flames/flames"), Animation.PlayMode.LOOP);
+
+        // load map number
+        FileTool.getData(String.format("%s\\assets\\map",FileSystems.getDefault().getPath("").toAbsolutePath().toString()), parent.maps);
     }
 
     @Override
@@ -113,16 +119,16 @@ public class LoadingScreen implements Screen {
                     System.out.println("Finished");
                     break;
             }
+            if (currentLoadingStage <= 5) {
+                loadingTable.getCells().get((currentLoadingStage - 1) * 2).getActor().setVisible(true);
+                loadingTable.getCells().get((currentLoadingStage - 1) * 2 + 1).getActor().setVisible(true);
+            }
             if (currentLoadingStage > 5) {
                 countDown -= delta;
                 currentLoadingStage = 5;
                 if (countDown < 0) {
                     parent.changeScreen(Pigsrpg.MENU);
                 }
-            }
-            if (currentLoadingStage <= 5) {
-                loadingTable.getCells().get((currentLoadingStage - 1) * 2).getActor().setVisible(true);
-                loadingTable.getCells().get((currentLoadingStage - 1) * 2 + 1).getActor().setVisible(true);
             }
             stage.act();
             stage.draw();

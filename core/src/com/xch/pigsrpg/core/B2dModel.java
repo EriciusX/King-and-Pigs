@@ -27,9 +27,9 @@ public class B2dModel {
     public boolean isSwimming = false;
     public Body player;
     private Sound hammering;
-    private MapObject human, door1, door2;
+    private MapObject human, door2;
     public TiledMapTileLayer Walllayer;
-    public boolean human_run = false, human_attack = false, human_jump = false, human_din = false, human_dout = false;
+    public boolean human_run = false, human_attack = false, human_jump = false, human_din = false, human_dout = true;
     private boolean left = true, right = true, up = true, jump_delay = false, left_delay = false, right_delay = false;
     public int human_jump_count = 0;
     private float delay = 0, jumpTimeCounter;
@@ -51,6 +51,7 @@ public class B2dModel {
         player.setBullet(true);
         MainScreen.resetStateTime();
     }
+
     private void loadAssets() {
         // load loading images and wait until finished
         assMan.queueAddMap();
@@ -73,7 +74,6 @@ public class B2dModel {
         }
         return false;
     }
-
     public void playSound(int sound){
         switch(sound){
             case HAMMERING_SOUND:
@@ -81,9 +81,14 @@ public class B2dModel {
                 break;
         }
     }
-    private void humanRun(boolean mode) { //run:true; jump:false
+
+    private void humanRun(boolean mode, float delta) { //run:true; jump:false
+//        final float speed = 6250;
         if(controller.left && left){
             right_delay = true;
+            if (player.getLinearVelocity().x > 0) {
+                player.setLinearVelocity(0, player.getLinearVelocity().y);
+            }
             if (player.getLinearVelocity().x >= -100 && mode) {
                 player.applyForceToCenter(-100, 0, true);
             }
@@ -96,6 +101,9 @@ public class B2dModel {
         }
         else if(controller.right && right){
             left_delay = true;
+            if (player.getLinearVelocity().x < 0) {
+                player.setLinearVelocity(0, player.getLinearVelocity().y);
+            }
             if (player.getLinearVelocity().x <= 100 && mode) {
                 player.applyForceToCenter(100, 0, true);
             }
@@ -114,6 +122,7 @@ public class B2dModel {
             //System.out.println("Stop");
         }
     }
+
     private void humanLogic(float delta) {
         //下 地判断
         if (!((boolean) (Walllayer.getCell((int) ((player.getPosition().x - 5) / 32) + (int) Walllayer.getProperties().get("width_min"), (int) ((player.getPosition().y - 18) / 32) + (int) Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")))) {
@@ -181,43 +190,46 @@ public class B2dModel {
         } else {
             right = true;
         }
-        //起跳  空格+非跳跃状态
-        if (!human_din) {
-            if (controller.jump && !human_jump) {
-                human_run = false;
-                player.setGravityScale(1f);
-                player.applyForceToCenter(0, 6000, true);
-                human_jump_count = 2;
-                controller.isSpaceDown = true;
-                jumpTimeCounter = delta * 50;
-                human_jump = true;
-                jump_delay = true;
-                //System.out.println("Jump");
-            }
-            //跳跃高度控制 跳跃中+空格持续按下
-            if (human_jump && controller.isSpaceDown) {
-                if (jumpTimeCounter > 0) {
+        // 出门后才可运动
+        if (!human_dout) {
+            //起跳  空格+非跳跃状态
+            if (!human_din) {
+                if (controller.jump && !human_jump) {
+                    human_run = false;
+                    player.setGravityScale(1f);
                     player.applyForceToCenter(0, 6000, true);
-                    jumpTimeCounter -= delta;
+                    human_jump_count = 2;
+                    controller.isSpaceDown = true;
+                    jumpTimeCounter = delta * 50;
+                    human_jump = true;
+                    jump_delay = true;
+                    //System.out.println("Jump");
                 }
-            }
-            //跳跃中状态 跑或攻击
-            if (human_jump) {
-                //跳跃中攻击
-                humanRun(false);
-            }
-            //攻击
-            if ((controller.attack || (controller.attack && human_jump)) && !human_attack) {
-                playSound(0);
-                MainScreen.resetStateTime();
-                human_run = false;
-                human_attack = true;
-                player.setLinearVelocity(0, 0);
-                //System.out.println("Attack");
-            }
-            //平地状态左右跑 非跳 非攻击
-            if (!human_jump && !human_attack) {
-                humanRun(true);
+                //跳跃高度控制 跳跃中+空格持续按下
+                if (human_jump && controller.isSpaceDown) {
+                    if (jumpTimeCounter > 0) {
+                        player.applyForceToCenter(0, 6000, true);
+                        jumpTimeCounter -= delta;
+                    }
+                }
+                //跳跃中状态 跑或攻击
+                if (human_jump) {
+                    //跳跃中攻击
+                    humanRun(false, delta);
+                }
+                //攻击
+                if ((controller.attack || (controller.attack && human_jump)) && !human_attack) {
+                    playSound(0);
+                    MainScreen.resetStateTime();
+                    human_run = false;
+                    human_attack = true;
+                    player.setLinearVelocity(0, 0);
+                    //System.out.println("Attack");
+                }
+                //平地状态左右跑 非跳 非攻击
+                if (!human_jump && !human_attack) {
+                    humanRun(true, delta);
+                }
             }
         }
     }
@@ -226,6 +238,7 @@ public class B2dModel {
         humanLogic(delta);
         world.step(delta,3,3);
     }
+
     private double Distance(int x1,int x2,int y1,int y2){
         double distance = Math.sqrt(Math.pow(Math.abs(x1-x2), 2)+Math.pow(Math.abs(y1-y2), 2));
         return distance;

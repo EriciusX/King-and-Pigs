@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.xch.pigsrpg.ui.*;
 
-import javax.security.auth.login.Configuration;
+import java.util.ArrayList;
 
 public class Pigsrpg extends Game {
     // Game Setting
@@ -41,7 +41,8 @@ public class Pigsrpg extends Game {
     // BGM
     public Music playingSong;
     // Stage
-    public int levelMap = 1;
+    public int levelMap = 0;
+    public ArrayList<String> maps = new ArrayList<String>();
     // Change Screen
     public void changeScreen(int screen){
         switch(screen){
@@ -50,7 +51,7 @@ public class Pigsrpg extends Game {
                 this.setScreen(menuScreen);
                 break;
             case PREFERENCES:
-                if(preferencesScreen == null) preferencesScreen = new PreferencesScreen(this, levelMap);
+                if(preferencesScreen == null) preferencesScreen = new PreferencesScreen(this);
                 this.setScreen(preferencesScreen);
                 break;
             case MapSelect:
@@ -85,6 +86,7 @@ public class Pigsrpg extends Game {
         playingSong.setLooping(true);
         playingSong.setVolume(0.2f);
         playingSong.play();
+
     }
 
     @Override

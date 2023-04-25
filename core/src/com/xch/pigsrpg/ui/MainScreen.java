@@ -12,14 +12,16 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.xch.pigsrpg.core.B2dModel;
+import com.xch.pigsrpg.core.GameLogic;
 import com.xch.pigsrpg.core.KeyBoardController;
 import com.badlogic.gdx.Screen;
 import com.xch.pigsrpg.core.Pigsrpg;
 import java.awt.*;
 
 public class MainScreen implements Screen {
-    private Pigsrpg parent;
+    private static Pigsrpg parent;
     private static B2dModel model;
+    private static GameLogic gameLogic;
     protected static OrthographicCamera cam;
     protected OrthographicCamera hudcam;
     private KeyBoardController controller;
@@ -29,8 +31,8 @@ public class MainScreen implements Screen {
     private static TextureRegion jumpTex;
     private static TextureRegion jumpingTex;
     private static TextureRegion downTex;
-    private static Animation idleAnimation;
-    private static Animation runAnimation;
+    public static Animation idleAnimation;
+    public static Animation runAnimation;
     private static Animation attackAnimation;
     private static Animation dinAnimation;
     private static Animation doutAnimation;
@@ -43,7 +45,7 @@ public class MainScreen implements Screen {
     private static final int GAME_PAUSED = 1;
     private static final int GAME_OVER = 2;
     private static final int GAME_LEVEL_END = 3;
-    private int gameState = 0;
+    public static int gameState = 0;
     private static float stateTime, totalTimeCount;
     private static BitmapFont font = new BitmapFont();
     public MainScreen(Pigsrpg pigsrpg){
@@ -54,6 +56,7 @@ public class MainScreen implements Screen {
         sb = parent.getSpriteBatch();
         controller = new KeyBoardController();
         model = new B2dModel(controller, cam, parent.assMan);
+        gameLogic = new GameLogic(controller, parent, model);
         debugRenderer = new Box2DDebugRenderer(true,true,true,true,true,true);
 
         // assets
@@ -72,7 +75,7 @@ public class MainScreen implements Screen {
         doutAnimation = new Animation(0.15f, atlas.findRegions("dout"), Animation.PlayMode.NORMAL);
 
         // map
-        map = parent.assMan.manager.get(("".format("map/%d.tmx", parent.levelMap)));
+        map = parent.assMan.manager.get((String.format("map/%s", parent.maps.get(parent.levelMap))));
         MapLayer layer = map.getLayers().get("对象层 1");
         objects = layer.getObjects();
         human = objects.get("humanking2");
@@ -85,8 +88,16 @@ public class MainScreen implements Screen {
     }
 
     private static void drawHuman(){
+        // dout
+        if (model.human_dout) {
+            currentFrame = (TextureRegion) doutAnimation.getKeyFrame(stateTime);
+            sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
+            if (doutAnimation.isAnimationFinished(stateTime)) {
+                model.human_dout = false;
+            }
+        }
         // run
-        if (model.human_run) {
+        else if (model.human_run) {
             currentFrame = (TextureRegion) runAnimation.getKeyFrame(stateTime);
             sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
         }
@@ -126,18 +137,12 @@ public class MainScreen implements Screen {
             sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
             if(dinAnimation.isAnimationFinished(stateTime)){
                 model.human_din = false;
-            }
-        }
-        // dout
-        else if (model.human_dout) {
-            currentFrame = (TextureRegion) doutAnimation.getKeyFrame(stateTime);
-            sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
-            if(doutAnimation.isAnimationFinished(stateTime)){
-                model.human_dout = false;
+                gameLogic.gameFinish = true;
             }
         }
         // idle
         else {
+            if (gameState == 1) { idleAnimation.setPlayMode(Animation.PlayMode.NORMAL); }
             currentFrame = (TextureRegion) idleAnimation.getKeyFrame(stateTime);
             sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
         }
@@ -184,12 +189,16 @@ public class MainScreen implements Screen {
         switch  (gameState) {
             case GAME_RUNNING:
                 setGameRunning(delta);
+                break;
             case GAME_PAUSED:
                 setGamePaused(delta);
+                break;
             case GAME_OVER:
                 setGameOver(delta);
+                break;
             case GAME_LEVEL_END:
                 setGameLevelEnd(delta);
+                break;
         }
     }
 
@@ -215,19 +224,20 @@ public class MainScreen implements Screen {
         sb.dispose();
     }
 
-    public static void setGameRunning(float delta) {
+    private static void setGameRunning(float delta) {
         // Logic
         model.logicStep(delta);
+        gameLogic.logicStep(delta);
     }
 
-    public static void setGamePaused(float delta) {
-
+    private static void setGamePaused(float delta) {
+        gameLogic.logicStep(delta);
     }
-    public static void setGameOver(float delta) {
-
+    private static void setGameOver(float delta) {
+        parent.changeScreen(Pigsrpg.MENU);
     }
-    public static void setGameLevelEnd(float delta) {
-
+    private static void setGameLevelEnd(float delta) {
+        parent.changeScreen(Pigsrpg.MENU);
     }
 
     public static void resetStateTime(){

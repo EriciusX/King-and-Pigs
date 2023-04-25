@@ -20,7 +20,7 @@ public class PreferencesScreen implements Screen {
     private Pigsrpg parent;
     private final Stage stage;
     private Skin skin;
-    public PreferencesScreen(Pigsrpg pigsrpg, int level){
+    public PreferencesScreen(Pigsrpg pigsrpg){
         parent = pigsrpg;
         stage = new Stage(new ScreenViewport());
     }

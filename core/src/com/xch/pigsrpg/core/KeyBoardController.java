@@ -42,12 +42,15 @@ public class KeyBoardController implements InputProcessor {
             case Keys.J:
                 attack = true;
                 keyProcessed = true;
+                break;
             case Keys.E:
                 entry = true;
                 keyProcessed = true;
+                break;
             case Keys.ESCAPE:
                 escape = true;
                 keyProcessed = true;
+                break;
         }
         return keyProcessed;
     }
@@ -85,12 +88,15 @@ public class KeyBoardController implements InputProcessor {
             case Keys.J:
                 attack = false;
                 keyProcessed = true;
+                break;
             case Keys.E:
                 entry = false;
                 keyProcessed = true;
+                break;
             case Keys.ESCAPE:
                 escape = false;
                 keyProcessed = true;
+                break;
         }
         return keyProcessed;	//  return our peyProcessed flag
     }
