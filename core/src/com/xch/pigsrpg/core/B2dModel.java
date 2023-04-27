@@ -27,7 +27,7 @@ public class B2dModel {
     public boolean isSwimming = false;
     public Body player;
     private Sound hammering;
-    private MapObject human, door2;
+    private MapObject human, door1, door2;
     public TiledMapTileLayer Walllayer;
     public boolean human_run = false, human_attack = false, human_jump = false, human_din = false, human_dout = true;
     private boolean left = true, right = true, up = true, jump_delay = false, left_delay = false, right_delay = false;
@@ -64,6 +64,8 @@ public class B2dModel {
         MapObjects objects = objectLayer.getObjects();
         human = objects.get("humanking2");
         door2 = objects.get("door2");
+        door1 = objects.get("door1");
+
     }
 
     public boolean pointIntersectsBody(Body body, Vector2 mouseLocation){
@@ -74,6 +76,7 @@ public class B2dModel {
         }
         return false;
     }
+
     public void playSound(int sound){
         switch(sound){
             case HAMMERING_SOUND:

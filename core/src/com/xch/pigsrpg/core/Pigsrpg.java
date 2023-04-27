@@ -51,19 +51,20 @@ public class Pigsrpg extends Game {
                 this.setScreen(menuScreen);
                 break;
             case PREFERENCES:
-                if(preferencesScreen == null) preferencesScreen = new PreferencesScreen(this);
+                if (preferencesScreen == null) preferencesScreen = new PreferencesScreen(this);
                 this.setScreen(preferencesScreen);
                 break;
             case MapSelect:
-                if(mapSelectScreen == null) mapSelectScreen = new MapSelectScreen(this);
+                if (mapSelectScreen == null) mapSelectScreen = new MapSelectScreen(this);
                 this.setScreen(mapSelectScreen);
                 break;
             case APPLICATION:
-                if(mainScreen == null) mainScreen = new MainScreen(this);
+                if (mainScreen != null) mainScreen = null;
+                mainScreen = new MainScreen(this);
                 this.setScreen(mainScreen);
                 break;
             case ENDGAME:
-                if(endScreen == null) endScreen = new EndScreen(this);
+                if (endScreen == null) endScreen = new EndScreen(this);
                 this.setScreen(endScreen);
                 break;
         }

@@ -16,7 +16,13 @@ import com.xch.pigsrpg.core.GameLogic;
 import com.xch.pigsrpg.core.KeyBoardController;
 import com.badlogic.gdx.Screen;
 import com.xch.pigsrpg.core.Pigsrpg;
-import java.awt.*;
+import com.xch.pigsrpg.graphics.DoorRenderer;
+import com.xch.pigsrpg.graphics.HumanKingRenderer;
+
+import javax.imageio.stream.ImageInputStream;
+
+import static com.xch.pigsrpg.graphics.HumanKingRenderer.drawHuman;
+import static com.xch.pigsrpg.graphics.DoorRenderer.drawDoor;
 
 public class MainScreen implements Screen {
     private static Pigsrpg parent;
@@ -24,30 +30,18 @@ public class MainScreen implements Screen {
     private static GameLogic gameLogic;
     protected static OrthographicCamera cam;
     protected OrthographicCamera hudcam;
-    private KeyBoardController controller;
-    private static Box2DDebugRenderer debugRenderer;
-    private TextureAtlas atlas;
-    protected static SpriteBatch sb;
-    private static TextureRegion jumpTex;
-    private static TextureRegion jumpingTex;
-    private static TextureRegion downTex;
-    public static Animation idleAnimation;
-    public static Animation runAnimation;
-    private static Animation attackAnimation;
-    private static Animation dinAnimation;
-    private static Animation doutAnimation;
-    private static TextureRegion currentFrame;
-    private TiledMap map;
+    private final KeyBoardController controller;
+    private final Box2DDebugRenderer debugRenderer;
+    protected SpriteBatch sb;
     private static MapRenderer mapRenderer;
-    private MapObjects objects;
-    private MapObject human;
+    private final MapObject human, door1, door2;
     private static final int GAME_RUNNING = 0;
     private static final int GAME_PAUSED = 1;
     private static final int GAME_OVER = 2;
     private static final int GAME_LEVEL_END = 3;
     public static int gameState = 0;
     private static float stateTime, totalTimeCount;
-    private static BitmapFont font = new BitmapFont();
+    private final BitmapFont font = new BitmapFont();
     public MainScreen(Pigsrpg pigsrpg){
         // init
         parent = pigsrpg;
@@ -63,89 +57,23 @@ public class MainScreen implements Screen {
         parent.assMan.queueAddImages();
         parent.assMan.manager.finishLoading();
 
-        // animation
-        atlas = parent.assMan.manager.get("human/humanking.atlas");
-        jumpTex = atlas.findRegion("Jump");
-        jumpingTex = atlas.findRegion("Fall");
-        downTex = atlas.findRegion("Ground");
-        idleAnimation = new Animation(0.12f, atlas.findRegions("idle"), Animation.PlayMode.LOOP);
-        runAnimation = new Animation(0.1f, atlas.findRegions("run"), Animation.PlayMode.LOOP);
-        attackAnimation = new Animation(0.09f, atlas.findRegions("attack"), Animation.PlayMode.NORMAL);
-        dinAnimation = new Animation(0.15f, atlas.findRegions("din"), Animation.PlayMode.NORMAL);
-        doutAnimation = new Animation(0.15f, atlas.findRegions("dout"), Animation.PlayMode.NORMAL);
+        // renderer
+        HumanKingRenderer humanKingRenderer = new HumanKingRenderer(parent);
+        DoorRenderer doorRenderer = new DoorRenderer(parent);
 
         // map
-        map = parent.assMan.manager.get((String.format("map/%s", parent.maps.get(parent.levelMap))));
+        TiledMap map = parent.assMan.manager.get((String.format("map/%s", parent.maps.get(parent.levelMap))));
         MapLayer layer = map.getLayers().get("对象层 1");
-        objects = layer.getObjects();
+        MapObjects objects = layer.getObjects();
         human = objects.get("humanking2");
+        door1 = objects.get("door1");
+        door2 = objects.get("door2");
         cam.position.x = (float) human.getProperties().get("x");
         cam.position.y = (float) human.getProperties().get("y")+96;
 
         mapRenderer = new OrthogonalTiledMapRenderer(map, sb);
         cam.zoom = Pigsrpg.V_SCALE;
         cam.update();
-    }
-
-    private static void drawHuman(){
-        // dout
-        if (model.human_dout) {
-            currentFrame = (TextureRegion) doutAnimation.getKeyFrame(stateTime);
-            sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
-            if (doutAnimation.isAnimationFinished(stateTime)) {
-                model.human_dout = false;
-            }
-        }
-        // run
-        else if (model.human_run) {
-            currentFrame = (TextureRegion) runAnimation.getKeyFrame(stateTime);
-            sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
-        }
-        // jump
-        else if (model.human_jump){
-            if (model.human_jump_count == 2) {
-                sb.draw(jumpTex, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
-                model.human_jump_count -= 1;
-            }else if (model.human_jump_count == 1) {
-                if (model.human_attack) {
-                    currentFrame = (TextureRegion) attackAnimation.getKeyFrame(stateTime);
-                    sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
-                    if(attackAnimation.isAnimationFinished(stateTime)){
-                        model.human_attack = false;
-                    }
-                }
-                else {
-                    sb.draw(jumpingTex, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
-                }
-            }
-            else if (model.human_jump_count == 0) {
-                sb.draw(downTex, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
-                model.human_jump = false;
-            }
-        }
-        // attack
-        else if (model.human_attack) {
-            currentFrame = (TextureRegion) attackAnimation.getKeyFrame(stateTime);
-            sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
-            if(attackAnimation.isAnimationFinished(stateTime)){
-                model.human_attack = false;
-            }
-        }
-        // din
-        else if (model.human_din) {
-            currentFrame = (TextureRegion) dinAnimation.getKeyFrame(stateTime);
-            sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
-            if(dinAnimation.isAnimationFinished(stateTime)){
-                model.human_din = false;
-                gameLogic.gameFinish = true;
-            }
-        }
-        // idle
-        else {
-            if (gameState == 1) { idleAnimation.setPlayMode(Animation.PlayMode.NORMAL); }
-            currentFrame = (TextureRegion) idleAnimation.getKeyFrame(stateTime);
-            sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
-        }
     }
 
     @Override
@@ -173,18 +101,19 @@ public class MainScreen implements Screen {
         //debug render
         debugRenderer.render(model.world, cam.combined);
 
+        // Draw Sb
+        sb.setProjectionMatrix(cam.combined);
+        sb.begin();
+        drawDoor(stateTime, sb, model, door1, door2);
+        drawHuman(stateTime, sb, model, gameLogic, gameState);
+
+        font.draw(sb, "FPS = " + 1 / (delta), cam.position.x - 100, cam.position.y + 100);
+        sb.end();
+
         // Cam
         cam.position.x = model.player.getPosition().x-19;
         cam.position.y = model.player.getPosition().y-14;
         cam.update();
-
-        // Draw Sb
-        sb.setProjectionMatrix(cam.combined);
-        sb.begin();
-        drawHuman();
-
-        font.draw(sb, "FPS = " + 1 / (delta), cam.position.x - 100, cam.position.y + 100);
-        sb.end();
 
         switch  (gameState) {
             case GAME_RUNNING:
@@ -222,21 +151,23 @@ public class MainScreen implements Screen {
     @Override
     public void dispose() {
         sb.dispose();
+        font.dispose();
     }
 
-    private static void setGameRunning(float delta) {
+    private void setGameRunning(float delta) {
         // Logic
         model.logicStep(delta);
         gameLogic.logicStep(delta);
     }
 
-    private static void setGamePaused(float delta) {
+    private void setGamePaused(float delta) {
         gameLogic.logicStep(delta);
     }
-    private static void setGameOver(float delta) {
+    private void setGameOver(float delta) {
+        parent.levelMap += 1;
         parent.changeScreen(Pigsrpg.MENU);
     }
-    private static void setGameLevelEnd(float delta) {
+    private void setGameLevelEnd(float delta) {
         parent.changeScreen(Pigsrpg.MENU);
     }
 

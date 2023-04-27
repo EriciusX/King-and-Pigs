@@ -16,6 +16,7 @@ public class B2dAssetManager {
     public final String skin = "UI/golden/golden-ui-skin.json";
     //image
     public final String humanking = "human/humanking.atlas";
+    public final String door = "door/door.atlas";
     //background
     public final String loading = "loading/loading.atlas";
     // Sounds
@@ -27,6 +28,7 @@ public class B2dAssetManager {
 
     public void queueAddImages(){
         manager.load(humanking, TextureAtlas.class);
+        manager.load(door, TextureAtlas.class);
     }
 
     public void queueAddLoadingImages(){
