@@ -1,10 +1,8 @@
 package com.xch.pigsrpg.core;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.xch.pigsrpg.ui.*;
 
@@ -17,7 +15,6 @@ public class Pigsrpg extends Game {
     public static int V_HEIGHT = 480;
     public static int FPS = 60;
     public static float V_SCALE = 0.5f;
-    public static final float STEP = 1 / (float)FPS;
     private AppPreferences preferences = new AppPreferences();
     // Screen
     private LoadingScreen loadingScreen;
@@ -37,7 +34,7 @@ public class Pigsrpg extends Game {
     private OrthographicCamera cam;
     private OrthographicCamera hudcam;
     // Asset
-    public B2dAssetManager assMan = new B2dAssetManager();
+    public static AssetManager assMan = new AssetManager();
     // BGM
     public Music playingSong;
     // Stage
@@ -59,12 +56,11 @@ public class Pigsrpg extends Game {
                 this.setScreen(mapSelectScreen);
                 break;
             case APPLICATION:
-                if (mainScreen != null) mainScreen = null;
                 mainScreen = new MainScreen(this);
                 this.setScreen(mainScreen);
                 break;
             case ENDGAME:
-                if (endScreen == null) endScreen = new EndScreen(this);
+                endScreen = new EndScreen(this);
                 this.setScreen(endScreen);
                 break;
         }
@@ -83,7 +79,7 @@ public class Pigsrpg extends Game {
         // Background
         assMan.queueAddMusic();
         assMan.manager.finishLoading();
-        playingSong = assMan.manager.get("sound/Rolemusic.mp3");
+        playingSong = assMan.manager.get("music/Rolemusic.mp3");
         playingSong.setLooping(true);
         playingSong.setVolume(0.2f);
         playingSong.play();

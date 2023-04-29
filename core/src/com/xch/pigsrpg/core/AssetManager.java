@@ -1,17 +1,15 @@
 package com.xch.pigsrpg.core;
 
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.assets.loaders.SkinLoader.SkinParameter;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class B2dAssetManager {
-    public final AssetManager manager = new AssetManager();
+public class AssetManager {
+    public final com.badlogic.gdx.assets.AssetManager manager = new com.badlogic.gdx.assets.AssetManager();
     //skin
     public final String skin = "UI/golden/golden-ui-skin.json";
     //image
@@ -21,8 +19,8 @@ public class B2dAssetManager {
     public final String loading = "loading/loading.atlas";
     // Sounds
     public final String hammering = "sound/hammering.wav";
-    public final String map = "map/1.tmx";
-    public B2dAssetManager(){
+    public String map = "map/1.tmx";
+    public AssetManager(){
         manager.setLoader(TiledMap.class, new TmxMapLoader());
     }
 
@@ -40,7 +38,7 @@ public class B2dAssetManager {
     }
 
     public void queueAddMusic(){
-        manager.load("sound/Rolemusic.mp3", Music.class);
+        manager.load("music/Rolemusic.mp3", Music.class);
     }
 
     public void queueAddSkin(){
@@ -48,7 +46,7 @@ public class B2dAssetManager {
         manager.load(skin, Skin.class, params);
     }
 
-    public void queueAddMap(){
+    public void queueAddMap(String map){
         manager.load(map, TiledMap.class);
     }
 

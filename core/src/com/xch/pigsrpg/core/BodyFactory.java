@@ -8,19 +8,12 @@ public class BodyFactory {
     private World world;
     public static BodyFactory thisInstance;
     private final float DEGTORAD = 0.0174533f;
-    private BodyFactory(World world){
-        this.world = world;
-    }
-
-    public static BodyFactory getInstance(World world){
-        if(thisInstance == null){
-            thisInstance = new BodyFactory(world);
-        }
-        return thisInstance;
+    public BodyFactory(World wd){
+        world = wd;
     }
 
     public static final int HUMAN = 0;
-    public static final int WOOD = 1;
+    public static final int Bar = 1;
     public static final int RUBBER = 2;
     public static final int STONE = 3;
     static public FixtureDef makeFixture(int material, Shape shape) {
@@ -30,12 +23,12 @@ public class BodyFactory {
             case 0:
                 fixtureDef.density = 0f;
                 fixtureDef.friction = 0.5f;
-                fixtureDef.restitution = 1f;
+                fixtureDef.restitution = 0f;
                 break;
             case 1:
                 fixtureDef.density = 0.5f;
                 fixtureDef.friction = 0.7f;
-                fixtureDef.restitution = 0.3f;
+                fixtureDef.restitution = 0f;
                 break;
             case 2:
                 fixtureDef.density = 1f;
@@ -79,10 +72,11 @@ public class BodyFactory {
     }
 
     //矩形体
-    public Body makeBoxPolyBody(float posx, float posy, float width, float height,int material, BodyType bodyType){
-        return makeBoxPolyBody(posx, posy, width, height, material, bodyType, false);
+    public Body makeBoxPolyBody(float posx, float posy, float width, float height,int material, BodyType bodyType, String userData){
+        return makeBoxPolyBody(posx, posy, width, height, material, bodyType, userData, false);
     }
-    public Body makeBoxPolyBody(float posx, float posy, float width, float height, int material, BodyType bodyType, boolean fixedRotation){
+
+    public Body makeBoxPolyBody(float posx, float posy, float width, float height, int material, BodyType bodyType, String userData, boolean fixedRotation){
         // create a definition
         BodyDef boxBodyDef = new BodyDef();
         boxBodyDef.type = bodyType;
@@ -94,7 +88,9 @@ public class BodyFactory {
         Body boxBody = world.createBody(boxBodyDef);
         PolygonShape poly = new PolygonShape();
         poly.setAsBox(width/2, height/2);
-        boxBody.createFixture(makeFixture(material,poly));
+        boxBody.getFixtureList();
+        boxBody.createFixture(makeFixture(material, poly));
+        boxBody.setUserData(userData);
         poly.dispose();
 
         return boxBody;

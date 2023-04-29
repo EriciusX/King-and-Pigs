@@ -2,14 +2,15 @@ package com.xch.pigsrpg.graphics;
 
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.maps.MapObject;
-import com.xch.pigsrpg.core.B2dModel;
+import com.xch.pigsrpg.body.B2dModel;
 import com.xch.pigsrpg.core.Pigsrpg;
+import com.xch.pigsrpg.logic.HumanKingLogic;
 
 public class DoorRenderer {
     public static Animation doorCloseAnimation, doorOpenAnimation;
     private final TextureAtlas doorAtlas;
-    private static TextureRegion doorClosing, doorOpening;
-    private static TextureRegion currentFrame;
+    private TextureRegion doorClosing, doorOpening;
+    private TextureRegion currentFrame;
     public static int doorState = 0;
     public DoorRenderer (Pigsrpg pigsrpg) {
         Pigsrpg parent = pigsrpg;
@@ -20,8 +21,8 @@ public class DoorRenderer {
         doorOpenAnimation = new Animation(0.15f, doorAtlas.findRegions("open"), Animation.PlayMode.NORMAL);
     }
 
-    public static void drawDoor (float stateTime, SpriteBatch sb, B2dModel model, MapObject door1, MapObject door2) {
-        if (model.human_dout) {
+    public void drawDoor (float stateTime, SpriteBatch sb, HumanKingLogic humanKingLogic, MapObject door1, MapObject door2) {
+        if (humanKingLogic.human_dout) {
             if (doorState == 0) {
                 currentFrame = (TextureRegion) doorOpenAnimation.getKeyFrame(stateTime);
                 sb.draw(currentFrame, (float) door1.getProperties().get("x") - 14, (float) door1.getProperties().get("y"));
@@ -35,7 +36,7 @@ public class DoorRenderer {
                 sb.draw(doorClosing, (float)door2.getProperties().get("x")-14, (float)door2.getProperties().get("y"));
             }
         }
-        else if (model.human_din) {
+        else if (humanKingLogic.human_din) {
             if (doorState == 3) {
                 currentFrame = (TextureRegion) doorOpenAnimation.getKeyFrame(stateTime);
                 sb.draw(currentFrame, (float)door2.getProperties().get("x")-14, (float)door2.getProperties().get("y"));
@@ -67,4 +68,7 @@ public class DoorRenderer {
         }
     }
 
+    public void reload() {
+        doorState = 0;
+    }
 }

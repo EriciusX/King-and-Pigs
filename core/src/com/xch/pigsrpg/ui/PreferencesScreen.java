@@ -1,8 +1,6 @@
 package com.xch.pigsrpg.ui;
 
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.xch.pigsrpg.core.Pigsrpg;
-import com.xch.pigsrpg.core.B2dContactListener;
 
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -31,8 +29,6 @@ public class PreferencesScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         stage.clear();
 
-        parent.assMan.queueAddSkin();
-        parent.assMan.manager.finishLoading();
         skin = parent.assMan.manager.get("UI/golden/golden-ui-skin.json");
         Table table = new Table();
         table.setFillParent(true);

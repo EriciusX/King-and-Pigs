@@ -1,9 +1,11 @@
 package com.xch.pigsrpg.graphics;
 
 import com.badlogic.gdx.graphics.g2d.*;
-import com.xch.pigsrpg.core.B2dModel;
-import com.xch.pigsrpg.core.GameLogic;
+import com.xch.pigsrpg.body.B2dModel;
+import com.xch.pigsrpg.logic.GameLogic;
 import com.xch.pigsrpg.core.Pigsrpg;
+import com.xch.pigsrpg.logic.HumanKingLogic;
+
 
 public class HumanKingRenderer {
     private static TextureRegion jumpTex;
@@ -26,73 +28,73 @@ public class HumanKingRenderer {
         doutAnimation = new Animation(0.15f, humanAtlas.findRegions("dout"), Animation.PlayMode.NORMAL);
     }
 
-    public static void drawHuman(float stateTime, SpriteBatch sb, B2dModel model, GameLogic gameLogic, int gameState){
+    public void drawHuman(float stateTime, SpriteBatch sb, HumanKingLogic humanKingLogic, B2dModel model, int gameState){
         // dout
-        if (model.human_dout) {
+        if (humanKingLogic.human_dout) {
             if (DoorRenderer.doorState == 1) {
                 currentFrame = (TextureRegion) doutAnimation.getKeyFrame(stateTime);
-                sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
+                sb.draw(currentFrame, model.humanking.getPosition().x - 28, model.humanking.getPosition().y - 28);
                 if (doutAnimation.isAnimationFinished(stateTime)) {
                     DoorRenderer.doorState = 2;
-                    model.human_dout = false;
+                    humanKingLogic.human_dout = false;
                 }
             }
         }
         // run
-        else if (model.human_run) {
+        else if (humanKingLogic.human_run) {
             currentFrame = (TextureRegion) runAnimation.getKeyFrame(stateTime);
-            sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
+            sb.draw(currentFrame, model.humanking.getPosition().x - 28, model.humanking.getPosition().y - 28);
         }
         // jump
-        else if (model.human_jump){
-            if (model.human_jump_count == 2) {
-                sb.draw(jumpTex, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
-                model.human_jump_count -= 1;
-            }else if (model.human_jump_count == 1) {
-                if (model.human_attack) {
+        else if (humanKingLogic.human_jump){
+            if (humanKingLogic.human_jump_count == 2) {
+                sb.draw(jumpTex, model.humanking.getPosition().x - 28, model.humanking.getPosition().y - 28);
+                humanKingLogic.human_jump_count -= 1;
+            }else if (humanKingLogic.human_jump_count == 1) {
+                if (humanKingLogic.human_attack) {
                     currentFrame = (TextureRegion) attackAnimation.getKeyFrame(stateTime);
-                    sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
+                    sb.draw(currentFrame, model.humanking.getPosition().x - 28, model.humanking.getPosition().y - 28);
                     if(attackAnimation.isAnimationFinished(stateTime)){
-                        model.human_attack = false;
+                        humanKingLogic.human_attack = false;
                     }
                 }
                 else {
-                    sb.draw(jumpingTex, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
+                    sb.draw(jumpingTex, model.humanking.getPosition().x - 28, model.humanking.getPosition().y - 28);
                 }
             }
-            else if (model.human_jump_count == 0) {
-                sb.draw(downTex, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
-                model.human_jump = false;
+            else if (humanKingLogic.human_jump_count == 0) {
+                sb.draw(downTex, model.humanking.getPosition().x - 28, model.humanking.getPosition().y - 28);
+                humanKingLogic.human_jump = false;
             }
         }
         // attack
-        else if (model.human_attack) {
+        else if (humanKingLogic.human_attack) {
             currentFrame = (TextureRegion) attackAnimation.getKeyFrame(stateTime);
-            sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
+            sb.draw(currentFrame, model.humanking.getPosition().x - 28, model.humanking.getPosition().y - 28);
             if(attackAnimation.isAnimationFinished(stateTime)){
-                model.human_attack = false;
+                humanKingLogic.human_attack = false;
             }
         }
         // din
-        else if (model.human_din) {
+        else if (humanKingLogic.human_din) {
             if (DoorRenderer.doorState == 4) {
                 currentFrame = (TextureRegion) dinAnimation.getKeyFrame(stateTime);
-                sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
+                sb.draw(currentFrame, model.humanking.getPosition().x - 28, model.humanking.getPosition().y - 28);
                 if (dinAnimation.isAnimationFinished(stateTime)) {
                     DoorRenderer.doorState = 5;
-                    model.human_din = false;
-                    gameLogic.gameFinish = true;
+                    humanKingLogic.human_din = false;
+                    GameLogic.gameFinish = true;
                 }
             }
             else {
-                sb.draw(jumpingTex, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
+                sb.draw(jumpingTex, model.humanking.getPosition().x - 28, model.humanking.getPosition().y - 28);
             }
         }
         // idle
         else {
             if (gameState == 1) { idleAnimation.setPlayMode(Animation.PlayMode.NORMAL); }
             currentFrame = (TextureRegion) idleAnimation.getKeyFrame(stateTime);
-            sb.draw(currentFrame, model.player.getPosition().x - 28, model.player.getPosition().y - 28);
+            sb.draw(currentFrame, model.humanking.getPosition().x - 28, model.humanking.getPosition().y - 28);
         }
     }
 }

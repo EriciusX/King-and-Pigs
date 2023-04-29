@@ -38,9 +38,6 @@ public class LoadingScreen implements Screen {
         stage = new Stage(new ScreenViewport());
 
         loadAssets();
-
-        parent.assMan.queueAddImages();
-        System.out.println("Loading images....");
     }
 
     private void loadAssets() {
@@ -82,7 +79,7 @@ public class LoadingScreen implements Screen {
         loadingTable.add(new LoadingBarPart(dash,flameAnimation));
 
         table.add(titleImage).align(Align.center).pad(10, 0, 0, 0).colspan(10);
-        table.row(); // move to next row
+        table.row();
         table.add(loadingTable).width(400);
         table.row();
         table.add(new Image(copyright)).align(Align.center).pad(200, 0, 0, 0).colspan(10);
@@ -112,8 +109,8 @@ public class LoadingScreen implements Screen {
                     parent.assMan.queueAddSounds();
                     break;
                 case MUSIC:
-                    System.out.println("Loading fonts....");
-                    parent.assMan.queueAddMusic();
+                    System.out.println("Loading Music....");
+//                    parent.assMan.queueAddMusic();
                     break;
                 case 5:
                     System.out.println("Finished");

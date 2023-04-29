@@ -29,7 +29,7 @@ public class MapSelectScreen extends InputAdapter implements Screen {
         table.setFillParent(true);
         table.setDebug(false);
 
-        parent.assMan.queueAddSkin();
+//        parent.assMan.queueAddSkin();
         parent.assMan.manager.finishLoading();
         skin = parent.assMan.manager.get("UI/golden/golden-ui-skin.json");
         // stage 1
@@ -38,7 +38,7 @@ public class MapSelectScreen extends InputAdapter implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println("Map 1");
-                parent.levelMap = 1;
+                parent.levelMap = 0;
                 parent.changeScreen(Pigsrpg.MENU);
             }
         });
@@ -49,7 +49,7 @@ public class MapSelectScreen extends InputAdapter implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 System.out.println("Map 2");
-                parent.levelMap = 2;
+                parent.levelMap = 1;
                 parent.changeScreen(Pigsrpg.MENU);
             }
         });
