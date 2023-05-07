@@ -63,11 +63,11 @@ public class B2dContactListener implements ContactListener {
                 platform_y = fixtureB.getBody().getPosition().y;
             }
 
-            if(player_y-14 < platform_y) {  //the player is below platform
+            if(player_y - 14f < platform_y || humanKingLogic.down) {
                 contact.setEnabled(false);
             } else {
+                if (humanKingLogic.human_fall) humanKingLogic.attachBar = true;
                 contact.setEnabled(true);
-                humanKingLogic.attachBar = true;
             }
         }
     }

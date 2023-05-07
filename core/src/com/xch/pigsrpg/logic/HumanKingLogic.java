@@ -8,10 +8,12 @@ import com.xch.pigsrpg.maps.Map;
 import com.xch.pigsrpg.ui.MainScreen;
 import jdk.tools.jmod.Main;
 
+import javax.xml.parsers.SAXParser;
+
 public class HumanKingLogic {
-    public boolean human_run = false, human_attack = false, human_jump = false, human_din = false, human_dout = true;
+    public boolean human_run = false, human_attack = false, human_jump = false, human_din = false, human_dout = true, human_fall = false;
     private boolean left = true, right = true, up = true, jump_delay = false, left_delay = false, right_delay = false;
-    public boolean attachBar = false;
+    public boolean attachBar = false, down = false;
     public int human_jump_count = 0;
     private float delay = 0, jumpTimeCounter;
     public static final int HAMMERING_SOUND = 0;
@@ -37,7 +39,6 @@ public class HumanKingLogic {
     }
 
     private void humanRun(boolean mode, float delta) { //run:true; jump:false
-//        final float speed = 6250;
         if(controller.left && left){
             right_delay = true;
             if (model.humanking.getLinearVelocity().x > 0) {
@@ -81,30 +82,40 @@ public class HumanKingLogic {
         //下 地判断
         if (!((boolean) (map.Walllayer.getCell((int) ((model.humanking.getPosition().x - 5) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((model.humanking.getPosition().y - 18) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")))
             || attachBar) {
-            if (jump_delay) {
-                if (delay >= delta / 60) {
+            System.out.print("2\n");
+            down = controller.down;
+            if (jump_delay) {  // Jump Interval
+                if (delay >= delta) {
                     delay = 0;
                     jump_delay = false;
                 }
                 delay += delta;
-            } else if (human_jump_count == 1) {
+            } else if (human_jump_count == 1) {  // Jump Finishing
                 model.humanking.setLinearVelocity(model.humanking.getLinearVelocity().x, 0);
                 model.humanking.setGravityScale(0f);
                 controller.isSpaceDown = false;
+                attachBar = false;
                 human_jump = false;
                 human_jump_count = 0;
-                attachBar = false;
-            } else {
+            } else {   // Stand On the Ground
                 model.humanking.setLinearVelocity(model.humanking.getLinearVelocity().x, 0);
                 model.humanking.setGravityScale(0f);
                 attachBar = false;
             }
-            //System.out.println("Down done!");
-        } else {
-            model.humanking.setGravityScale(1f);
-            human_run = false;
-            human_jump = true;
-            human_jump_count = 1;
+        } else {  // Free Fall
+            down = controller.down;
+            if (down && human_fall) model.humanking.setLinearVelocity(0,-1);
+            if (model.humanking.getLinearVelocity().y == 0f) {
+                model.humanking.setGravityScale(1f);
+                human_fall = true;
+            }
+            else human_fall = false;
+
+            if (model.humanking.getLinearVelocity().y != 0f) {
+                human_jump_count = 1;
+                human_run = false;
+                human_jump = true;
+            }
         }
         //进门
         if ((Math.abs((model.humanking.getPosition().x) - (float) map.door2.getProperties().get("x")) <= 15) && !human_jump && !human_run && !human_din && controller.entry) {
@@ -156,7 +167,7 @@ public class HumanKingLogic {
                 model.humanking.applyForceToCenter(0, 6000, true);
                 human_jump_count = 2;
                 controller.isSpaceDown = true;
-                jumpTimeCounter = delta * 50;
+                jumpTimeCounter = delta * 30;
                 human_jump = true;
                 jump_delay = true;
                 //System.out.println("Jump");
@@ -190,8 +201,8 @@ public class HumanKingLogic {
     }
 
     public void reload() {
-        human_run = false; human_attack = false; human_jump = false; human_din = false; human_dout = true;
-        left = true; right = true; up = true;
+        human_run = false; human_attack = false; human_jump = false; human_din = false; human_dout = true; human_fall = false;
+        left = true; right = true; up = true; down = false;
         jump_delay = false; left_delay = false; right_delay = false;
         attachBar = false;
         human_jump_count = 0; delay = 0;
