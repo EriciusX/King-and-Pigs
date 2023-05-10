@@ -14,7 +14,7 @@ public class BodyFactory {
 
     public static final int HUMAN = 0;
     public static final int Bar = 1;
-    public static final int RUBBER = 2;
+    public static final int Box = 2;
     public static final int STONE = 3;
     static public FixtureDef makeFixture(int material, Shape shape) {
         FixtureDef fixtureDef = new FixtureDef();

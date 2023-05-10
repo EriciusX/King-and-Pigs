@@ -31,7 +31,7 @@ public class MapSelectScreen extends InputAdapter implements Screen {
 
 //        parent.assMan.queueAddSkin();
         parent.assMan.manager.finishLoading();
-        skin = parent.assMan.manager.get("UI/golden/golden-ui-skin.json");
+        skin = parent.assMan.manager.get(parent.assMan.skin);
         // stage 1
         final TextButton stage1 = new TextButton("1", skin);
         stage1.addListener(new ChangeListener() {

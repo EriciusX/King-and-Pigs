@@ -17,7 +17,7 @@ public class HumanKingRenderer {
     
     public HumanKingRenderer (Pigsrpg pigsrpg) {
         Pigsrpg parent = pigsrpg;
-        humanAtlas = parent.assMan.manager.get("human/humanking.atlas");
+        humanAtlas = parent.assMan.manager.get(parent.assMan.humanking);
         jumpTex = humanAtlas.findRegion("Jump");
         jumpingTex = humanAtlas.findRegion("Fall");
         downTex = humanAtlas.findRegion("Ground");

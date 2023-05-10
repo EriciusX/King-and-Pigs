@@ -29,7 +29,7 @@ public class PreferencesScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         stage.clear();
 
-        skin = parent.assMan.manager.get("UI/golden/golden-ui-skin.json");
+        skin = parent.assMan.manager.get(parent.assMan.skin);
         Table table = new Table();
         table.setFillParent(true);
         table.setDebug(false);

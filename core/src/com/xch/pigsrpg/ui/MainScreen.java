@@ -63,7 +63,7 @@ public class MainScreen implements Screen {
         logic = new Logic(controller, model, map, this);
 
         // renderer
-        renderer = new Renderer(parent, sb, logic, map, model, this);
+        renderer = new Renderer(parent, sb, logic, map, model, this, cam);
 
         // map
         cam.position.x = (float) map.human.getProperties().get("x");
@@ -105,7 +105,7 @@ public class MainScreen implements Screen {
         sb.begin();
         renderer.render(stateTime);
 
-        font.draw(sb, "FPS = " + 1 / (delta), cam.position.x - 100, cam.position.y + 100);
+        font.draw(sb, "FPS " + 1 / (delta), cam.position.x - 100, cam.position.y + 100);
         sb.end();
 
         // Cam
@@ -160,7 +160,6 @@ public class MainScreen implements Screen {
         // Manual Dispose
         world.dispose();
         debugRenderer.dispose();
-        System.out.print("111\n");
     }
 
     private void setGameRunning(float delta) {

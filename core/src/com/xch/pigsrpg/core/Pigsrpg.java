@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Pigsrpg extends Game {
     // Game Setting
     public static final String TITLE = "King and Pigs";
-    public static int V_WIDTH = 720;
+    public static int V_WIDTH = 640;
     public static int V_HEIGHT = 480;
     public static int FPS = 60;
     public static float V_SCALE = 0.5f;

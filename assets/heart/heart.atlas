@@ -1,0 +1,153 @@
+
+heart.png
+size: 128, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+bigheart
+  rotate: false
+  xy: 2, 2
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 4
+bigheart
+  rotate: false
+  xy: 2, 2
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 1
+bigheart
+  rotate: false
+  xy: 2, 2
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 2
+bigheart
+  rotate: false
+  xy: 2, 2
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 3
+bigheart
+  rotate: false
+  xy: 2, 2
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 7
+bigheart
+  rotate: false
+  xy: 86, 38
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 6
+bigheart
+  rotate: false
+  xy: 86, 22
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 8
+bigheart
+  rotate: false
+  xy: 102, 38
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 5
+bighit
+  rotate: false
+  xy: 70, 22
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 1
+bighit
+  rotate: false
+  xy: 70, 6
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 2
+livebar
+  rotate: false
+  xy: 2, 18
+  size: 66, 34
+  orig: 66, 34
+  offset: 0, 0
+  index: -1
+smallheart
+  rotate: false
+  xy: 70, 38
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 5
+smallheart
+  rotate: false
+  xy: 70, 38
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 2
+smallheart
+  rotate: false
+  xy: 70, 38
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 1
+smallheart
+  rotate: false
+  xy: 70, 38
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 4
+smallheart
+  rotate: false
+  xy: 70, 38
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 3
+smallheart
+  rotate: false
+  xy: 34, 2
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 7
+smallheart
+  rotate: false
+  xy: 50, 2
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 6
+smallheart
+  rotate: false
+  xy: 86, 6
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 8
+smallhit
+  rotate: false
+  xy: 18, 2
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 1
+smallhit
+  rotate: false
+  xy: 102, 22
+  size: 14, 14
+  orig: 14, 14
+  offset: 0, 0
+  index: 2

@@ -39,7 +39,7 @@ public class MenuScreen implements Screen {
 
         parent.assMan.queueAddSkin();
         parent.assMan.manager.finishLoading();
-        skin = parent.assMan.manager.get("UI/golden/golden-ui-skin.json");
+        skin = parent.assMan.manager.get(parent.assMan.skin);
 
         TextButton newGame = new TextButton("New Game", skin);
         TextButton preferences = new TextButton("Preferences", skin);

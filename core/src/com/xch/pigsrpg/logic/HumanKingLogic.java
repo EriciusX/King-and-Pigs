@@ -17,6 +17,8 @@ public class HumanKingLogic {
     public int human_jump_count = 0;
     private float delay = 0, jumpTimeCounter;
     public static final int HAMMERING_SOUND = 0;
+    public static int playerHeart = 3;
+    public static int playerDiamond = 0;
     private KeyBoardController controller;
     private Sound hammering;
     private B2dModel model;
@@ -27,7 +29,7 @@ public class HumanKingLogic {
         map = mp;
         mainScreen = ms;
         controller = cont;
-        hammering = Pigsrpg.assMan.manager.get("sound/hammering.wav");
+        hammering = Pigsrpg.assMan.manager.get(Pigsrpg.assMan.hammering);
     }
 
     public void playSound(int sound){
@@ -82,7 +84,6 @@ public class HumanKingLogic {
         //下 地判断
         if (!((boolean) (map.Walllayer.getCell((int) ((model.humanking.getPosition().x - 5) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((model.humanking.getPosition().y - 18) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")))
             || attachBar) {
-            System.out.print("2\n");
             down = controller.down;
             if (jump_delay) {  // Jump Interval
                 if (delay >= delta) {

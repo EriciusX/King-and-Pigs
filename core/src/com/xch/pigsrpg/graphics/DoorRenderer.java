@@ -14,7 +14,7 @@ public class DoorRenderer {
     public static int doorState = 0;
     public DoorRenderer (Pigsrpg pigsrpg) {
         Pigsrpg parent = pigsrpg;
-        doorAtlas = parent.assMan.manager.get("door/door.atlas");
+        doorAtlas = parent.assMan.manager.get(parent.assMan.door);
         doorClosing = doorAtlas.findRegion("closing");
         doorOpening = doorAtlas.findRegion("opening");
         doorCloseAnimation = new Animation(0.5f, doorAtlas.findRegions("close"), Animation.PlayMode.NORMAL);
