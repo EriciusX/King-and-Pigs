@@ -23,6 +23,7 @@ public class Map {
     public TiledMapTileLayer Walllayer;;
     public MapObjects objects;
     public List<String> barName = new ArrayList<String>();
+    public List<String> boxName = new ArrayList<String>();
     private List<String> objectName = new ArrayList<String>();
     public Map (Pigsrpg pigsrpg, SpriteBatch spriteBatch) {
         parent = pigsrpg;
@@ -40,7 +41,8 @@ public class Map {
 
         // Load Map ObjectName
         getLayerObjectName();
-        separateObjectName();
+        separateObjectName(barName, "bar");
+        separateObjectName(boxName, "box");
 
         Walllayer = (TiledMapTileLayer) map.getLayers().get("map");
         human = objects.get("humanking2");
@@ -53,12 +55,12 @@ public class Map {
         mapRenderer.render();
     }
 
-    private void separateObjectName () {
-        if (barName != null) barName.clear();
+    private void separateObjectName (List<String> NameList, String object) {
+        if (NameList != null) NameList.clear();
 
         for (int i = 0; i < objectName.size()-1; i++) {
-            if (objectName.get(i).contains("bar"))
-                barName.add(objectName.get(i));
+            if (objectName.get(i).contains(object))
+                NameList.add(objectName.get(i));
         }
     }
 

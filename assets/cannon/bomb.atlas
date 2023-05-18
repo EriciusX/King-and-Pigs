@@ -1,0 +1,83 @@
+
+bomb.png
+size: 1024, 64
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+bomb
+  rotate: false
+  xy: 380, 2
+  size: 52, 56
+  orig: 52, 56
+  offset: 0, 0
+  index: -1
+bombing
+  rotate: false
+  xy: 56, 2
+  size: 52, 56
+  orig: 52, 56
+  offset: 0, 0
+  index: 4
+bombing
+  rotate: false
+  xy: 110, 2
+  size: 52, 56
+  orig: 52, 56
+  offset: 0, 0
+  index: 1
+bombing
+  rotate: false
+  xy: 272, 2
+  size: 52, 56
+  orig: 52, 56
+  offset: 0, 0
+  index: 3
+bombing
+  rotate: false
+  xy: 488, 2
+  size: 52, 56
+  orig: 52, 56
+  offset: 0, 0
+  index: 2
+boom
+  rotate: false
+  xy: 2, 2
+  size: 52, 56
+  orig: 52, 56
+  offset: 0, 0
+  index: 2
+boom
+  rotate: false
+  xy: 164, 2
+  size: 52, 56
+  orig: 52, 56
+  offset: 0, 0
+  index: 4
+boom
+  rotate: false
+  xy: 218, 2
+  size: 52, 56
+  orig: 52, 56
+  offset: 0, 0
+  index: 1
+boom
+  rotate: false
+  xy: 326, 2
+  size: 52, 56
+  orig: 52, 56
+  offset: 0, 0
+  index: 6
+boom
+  rotate: false
+  xy: 434, 2
+  size: 52, 56
+  orig: 52, 56
+  offset: 0, 0
+  index: 3
+boom
+  rotate: false
+  xy: 542, 2
+  size: 52, 56
+  orig: 52, 56
+  offset: 0, 0
+  index: 5

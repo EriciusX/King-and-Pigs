@@ -1,5 +1,6 @@
 package com.xch.pigsrpg.core;
 
+import com.badlogic.gdx.physics.box2d.World;
 import com.xch.pigsrpg.body.B2dModel;
 import com.xch.pigsrpg.logic.GameLogic;
 import com.xch.pigsrpg.logic.HumanKingLogic;
@@ -11,10 +12,10 @@ public class Logic {
     public HumanKingLogic humanKingLogic;
     private MainScreen mainScreen;
     private Map map;
-    public Logic (KeyBoardController cont, B2dModel model, Map mp, MainScreen ms) {
+    public Logic (KeyBoardController cont, B2dModel model, Map mp, MainScreen ms, World world) {
         map = mp;
         mainScreen = ms;
-        humanKingLogic = new HumanKingLogic(cont, model, map, mainScreen);
+        humanKingLogic = new HumanKingLogic(cont, model, map, mainScreen, model.bodyFactory, world);
     }
 
     public void AllLogic (float delta) {

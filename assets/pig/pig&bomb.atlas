@@ -1,0 +1,181 @@
+
+pig&bomb.png
+size: 1024, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+idle
+  rotate: false
+  xy: 30, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 10
+idle
+  rotate: false
+  xy: 30, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 6
+idle
+  rotate: false
+  xy: 30, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 8
+idle
+  rotate: false
+  xy: 30, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 9
+idle
+  rotate: false
+  xy: 30, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 7
+idle
+  rotate: false
+  xy: 114, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 1
+idle
+  rotate: false
+  xy: 254, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 3
+idle
+  rotate: false
+  xy: 338, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 5
+idle
+  rotate: false
+  xy: 450, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 2
+idle
+  rotate: false
+  xy: 562, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 4
+pickbomb
+  rotate: false
+  xy: 58, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 1
+pickbomb
+  rotate: false
+  xy: 198, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 3
+pickbomb
+  rotate: false
+  xy: 394, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 2
+pickbomb
+  rotate: false
+  xy: 506, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 4
+run
+  rotate: false
+  xy: 2, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 4
+run
+  rotate: false
+  xy: 142, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 1
+run
+  rotate: false
+  xy: 170, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 6
+run
+  rotate: false
+  xy: 282, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 3
+run
+  rotate: false
+  xy: 366, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 5
+run
+  rotate: false
+  xy: 478, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 2
+throw
+  rotate: false
+  xy: 86, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 1
+throw
+  rotate: false
+  xy: 226, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 3
+throw
+  rotate: false
+  xy: 310, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 5
+throw
+  rotate: false
+  xy: 422, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 2
+throw
+  rotate: false
+  xy: 534, 2
+  size: 26, 26
+  orig: 26, 26
+  offset: 0, 0
+  index: 4

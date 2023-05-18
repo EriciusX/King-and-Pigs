@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.maps.MapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -16,11 +15,7 @@ import com.xch.pigsrpg.logic.GameLogic;
 import com.xch.pigsrpg.core.KeyBoardController;
 import com.badlogic.gdx.Screen;
 import com.xch.pigsrpg.core.Pigsrpg;
-import com.xch.pigsrpg.logic.HumanKingLogic;
 import com.xch.pigsrpg.maps.Map;
-
-import java.util.Objects;
-
 
 public class MainScreen implements Screen {
     private final Pigsrpg parent;
@@ -39,7 +34,7 @@ public class MainScreen implements Screen {
     public int gameState = 0;
     private float stateTime, totalTimeCount;
     private final Map map;
-    private final World world;
+    public final World world;
     private final Logic logic;
     private final Renderer renderer;
     private final BitmapFont font = new BitmapFont();
@@ -60,7 +55,7 @@ public class MainScreen implements Screen {
         debugRenderer = new Box2DDebugRenderer(true,true,true,true,true,true);
 
         // logic
-        logic = new Logic(controller, model, map, this);
+        logic = new Logic(controller, model, map, this, world);
 
         // renderer
         renderer = new Renderer(parent, sb, logic, map, model, this, cam);
@@ -69,7 +64,7 @@ public class MainScreen implements Screen {
         cam.position.x = (float) map.human.getProperties().get("x");
         cam.position.y = (float) map.human.getProperties().get("y")+96;
 
-        listener = new B2dContactListener(logic.humanKingLogic);
+        listener = new B2dContactListener(logic.humanKingLogic, model, world);
         world.setContactListener(listener);
 
         cam.zoom = Pigsrpg.V_SCALE;
@@ -97,9 +92,6 @@ public class MainScreen implements Screen {
         stateTime += delta;
         totalTimeCount += delta;
 
-        //debug render
-        debugRenderer.render(world, cam.combined);
-
         // Draw Sb
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
@@ -112,6 +104,9 @@ public class MainScreen implements Screen {
         cam.position.x = model.humanking.getPosition().x-19;
         cam.position.y = model.humanking.getPosition().y-14;
         cam.update();
+
+        //debug render
+        debugRenderer.render(world, cam.combined);
 
         switch  (gameState) {
             case GAME_RUNNING:

@@ -1,0 +1,69 @@
+
+pig&match.png
+size: 256, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+lightcannon
+  rotate: false
+  xy: 30, 2
+  size: 26, 18
+  orig: 26, 18
+  offset: 0, 0
+  index: 3
+lightcannon
+  rotate: false
+  xy: 114, 2
+  size: 26, 18
+  orig: 26, 18
+  offset: 0, 0
+  index: 2
+lightcannon
+  rotate: false
+  xy: 226, 2
+  size: 26, 18
+  orig: 26, 18
+  offset: 0, 0
+  index: 1
+lightmatch
+  rotate: false
+  xy: 2, 2
+  size: 26, 18
+  orig: 26, 18
+  offset: 0, 0
+  index: 2
+lightmatch
+  rotate: false
+  xy: 86, 2
+  size: 26, 18
+  orig: 26, 18
+  offset: 0, 0
+  index: 1
+lightmatch
+  rotate: false
+  xy: 170, 2
+  size: 26, 18
+  orig: 26, 18
+  offset: 0, 0
+  index: 3
+matchon
+  rotate: false
+  xy: 58, 2
+  size: 26, 18
+  orig: 26, 18
+  offset: 0, 0
+  index: 2
+matchon
+  rotate: false
+  xy: 142, 2
+  size: 26, 18
+  orig: 26, 18
+  offset: 0, 0
+  index: 1
+matchon
+  rotate: false
+  xy: 198, 2
+  size: 26, 18
+  orig: 26, 18
+  offset: 0, 0
+  index: 3

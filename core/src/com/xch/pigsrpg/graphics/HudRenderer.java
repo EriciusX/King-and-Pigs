@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.xch.pigsrpg.body.B2dContactListener;
 import com.xch.pigsrpg.body.B2dModel;
 import com.xch.pigsrpg.core.Pigsrpg;
 import com.xch.pigsrpg.logic.HumanKingLogic;
@@ -43,7 +42,7 @@ public class HudRenderer {
         }
     }
 
-    public void drawhud (float stateTime, SpriteBatch sb, HumanKingLogic humanKingLogic, OrthographicCamera cam, B2dModel model) {
+    public void drawHud (float stateTime, SpriteBatch sb, HumanKingLogic humanKingLogic, OrthographicCamera cam, B2dModel model) {
         // livebar
         float hud_x = cam.position.x - (cam.viewportWidth *parent.V_SCALE) / 2;
         float hud_y = cam.position.y + (cam.viewportHeight*parent.V_SCALE) / 3;

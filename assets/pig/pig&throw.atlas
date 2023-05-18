@@ -1,0 +1,181 @@
+
+pig&throw.png
+size: 128, 256
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+idle
+  rotate: false
+  xy: 2, 162
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 9
+idle
+  rotate: false
+  xy: 2, 162
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 6
+idle
+  rotate: false
+  xy: 2, 162
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 7
+idle
+  rotate: false
+  xy: 2, 162
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 8
+idle
+  rotate: false
+  xy: 2, 162
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 5
+pickbox
+  rotate: false
+  xy: 2, 162
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 5
+idle
+  rotate: false
+  xy: 30, 162
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 1
+idle
+  rotate: false
+  xy: 86, 194
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 3
+idle
+  rotate: false
+  xy: 58, 98
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 2
+idle
+  rotate: false
+  xy: 30, 34
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 4
+pickbox
+  rotate: false
+  xy: 30, 194
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 2
+pickbox
+  rotate: false
+  xy: 30, 130
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 4
+pickbox
+  rotate: false
+  xy: 30, 98
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 1
+pickbox
+  rotate: false
+  xy: 2, 34
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 3
+run
+  rotate: false
+  xy: 2, 194
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 4
+run
+  rotate: false
+  xy: 58, 194
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 1
+run
+  rotate: false
+  xy: 2, 98
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 6
+run
+  rotate: false
+  xy: 2, 66
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 3
+run
+  rotate: false
+  xy: 86, 162
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 5
+run
+  rotate: false
+  xy: 86, 130
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 2
+throw
+  rotate: false
+  xy: 2, 130
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 1
+throw
+  rotate: false
+  xy: 58, 162
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 3
+throw
+  rotate: false
+  xy: 58, 130
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 5
+throw
+  rotate: false
+  xy: 30, 66
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 2
+throw
+  rotate: false
+  xy: 2, 2
+  size: 26, 30
+  orig: 26, 30
+  offset: 0, 0
+  index: 4

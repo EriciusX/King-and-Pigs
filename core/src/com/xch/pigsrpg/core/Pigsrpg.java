@@ -20,7 +20,7 @@ public class Pigsrpg extends Game {
     private LoadingScreen loadingScreen;
     private PreferencesScreen preferencesScreen;
     private MenuScreen menuScreen;
-    private MainScreen mainScreen;
+    public MainScreen mainScreen;
     private EndScreen endScreen;
     private MapSelectScreen mapSelectScreen;
     // Screen_def

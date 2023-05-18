@@ -1,0 +1,48 @@
+
+box.png
+size: 64, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+boxp1
+  rotate: false
+  xy: 14, 2
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+boxp2
+  rotate: false
+  xy: 38, 2
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+boxp3
+  rotate: false
+  xy: 26, 2
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+boxp4
+  rotate: false
+  xy: 2, 2
+  size: 10, 10
+  orig: 10, 10
+  offset: 0, 0
+  index: -1
+hit
+  rotate: false
+  xy: 2, 14
+  size: 22, 16
+  orig: 22, 16
+  offset: 0, 0
+  index: -1
+idle
+  rotate: false
+  xy: 26, 14
+  size: 22, 16
+  orig: 22, 16
+  offset: 0, 0
+  index: -1

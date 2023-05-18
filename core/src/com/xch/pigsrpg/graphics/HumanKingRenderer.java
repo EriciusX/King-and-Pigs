@@ -11,7 +11,7 @@ public class HumanKingRenderer {
     private static TextureRegion jumpTex;
     private static TextureRegion jumpingTex;
     private static TextureRegion downTex;
-    public static Animation idleAnimation, runAnimation, attackAnimation, dinAnimation, doutAnimation;
+    public static Animation idleAnimation, runAnimation, attackAnimation, dinAnimation, doutAnimation, deadAnimation;
     private final TextureAtlas humanAtlas;
     private static TextureRegion currentFrame;
     
@@ -26,6 +26,7 @@ public class HumanKingRenderer {
         attackAnimation = new Animation(0.09f, humanAtlas.findRegions("attack"), Animation.PlayMode.NORMAL);
         dinAnimation = new Animation(0.15f, humanAtlas.findRegions("din"), Animation.PlayMode.NORMAL);
         doutAnimation = new Animation(0.15f, humanAtlas.findRegions("dout"), Animation.PlayMode.NORMAL);
+        deadAnimation = new Animation(0.5f, humanAtlas.findRegions("dead"), Animation.PlayMode.NORMAL);
     }
 
     public void drawHuman(float stateTime, SpriteBatch sb, HumanKingLogic humanKingLogic, B2dModel model, int gameState){
@@ -54,8 +55,9 @@ public class HumanKingRenderer {
                 if (humanKingLogic.human_attack) {
                     currentFrame = (TextureRegion) attackAnimation.getKeyFrame(stateTime);
                     sb.draw(currentFrame, model.humanking.getPosition().x - 28, model.humanking.getPosition().y - 28);
-                    if(attackAnimation.isAnimationFinished(stateTime)){
+                    if(attackAnimation.isAnimationFinished(stateTime)) {
                         humanKingLogic.human_attack = false;
+                        humanKingLogic.destraySensor();
                     }
                 }
                 else {
@@ -71,8 +73,9 @@ public class HumanKingRenderer {
         else if (humanKingLogic.human_attack) {
             currentFrame = (TextureRegion) attackAnimation.getKeyFrame(stateTime);
             sb.draw(currentFrame, model.humanking.getPosition().x - 28, model.humanking.getPosition().y - 28);
-            if(attackAnimation.isAnimationFinished(stateTime)){
+            if(attackAnimation.isAnimationFinished(stateTime)) {
                 humanKingLogic.human_attack = false;
+                humanKingLogic.destraySensor();
             }
         }
         // din
@@ -88,6 +91,15 @@ public class HumanKingRenderer {
             }
             else {
                 sb.draw(jumpingTex, model.humanking.getPosition().x - 28, model.humanking.getPosition().y - 28);
+            }
+        }
+        // dead
+        else if (humanKingLogic.human_dead) {
+            currentFrame = (TextureRegion) deadAnimation.getKeyFrame(stateTime);
+            sb.draw(currentFrame, model.humanking.getPosition().x - 28, model.humanking.getPosition().y - 28);
+            if (deadAnimation.isAnimationFinished(stateTime)) {
+                humanKingLogic.human_dead = false;
+                GameLogic.gameFinish = true;
             }
         }
         // idle

@@ -1,0 +1,216 @@
+
+pig.png
+size: 1024, 32
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+attack
+  rotate: false
+  xy: 110, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 4
+attack
+  rotate: false
+  xy: 290, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 1
+attack
+  rotate: false
+  xy: 470, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 3
+attack
+  rotate: false
+  xy: 614, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 5
+attack
+  rotate: false
+  xy: 794, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 2
+dead
+  rotate: false
+  xy: 146, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 4
+dead
+  rotate: false
+  xy: 326, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 1
+dead
+  rotate: false
+  xy: 506, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 3
+dead
+  rotate: false
+  xy: 830, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 2
+fall
+  rotate: false
+  xy: 866, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: -1
+ground
+  rotate: false
+  xy: 686, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: -1
+hit
+  rotate: false
+  xy: 434, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 2
+hit
+  rotate: false
+  xy: 758, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 1
+idle
+  rotate: false
+  xy: 38, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 10
+idle
+  rotate: false
+  xy: 74, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 9
+idle
+  rotate: false
+  xy: 182, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 1
+idle
+  rotate: false
+  xy: 182, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 6
+idle
+  rotate: false
+  xy: 182, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 4
+idle
+  rotate: false
+  xy: 182, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 3
+idle
+  rotate: false
+  xy: 182, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 2
+idle
+  rotate: false
+  xy: 182, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 5
+idle
+  rotate: false
+  xy: 398, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 8
+idle
+  rotate: false
+  xy: 722, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 7
+jump
+  rotate: false
+  xy: 542, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: -1
+run
+  rotate: false
+  xy: 2, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 4
+run
+  rotate: false
+  xy: 218, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 1
+run
+  rotate: false
+  xy: 254, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 6
+run
+  rotate: false
+  xy: 362, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 3
+run
+  rotate: false
+  xy: 578, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 5
+run
+  rotate: false
+  xy: 650, 2
+  size: 34, 28
+  orig: 34, 28
+  offset: 0, 0
+  index: 2

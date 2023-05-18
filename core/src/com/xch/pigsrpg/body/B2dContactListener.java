@@ -1,46 +1,39 @@
 package com.xch.pigsrpg.body;
 
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.xch.pigsrpg.core.BodyFactory;
-import com.xch.pigsrpg.core.KeyBoardController;
 import com.xch.pigsrpg.logic.HumanKingLogic;
-
-import java.util.Objects;
 
 public class B2dContactListener implements ContactListener {
     private HumanKingLogic humanKingLogic;
-    public B2dContactListener(HumanKingLogic lgc){
+    private B2dModel model;
+    private World world;
+    public B2dContactListener(HumanKingLogic lgc, B2dModel md, World wd){
         humanKingLogic = lgc;
+        model = md;
+        world = wd;
     }
 
     @Override
     public void beginContact(Contact contact) {
-//        System.out.println("Contact");
-//        Fixture fa = contact.getFixtureA();
-//        Fixture fb = contact.getFixtureB();
-//
-//        System.out.println(fa.getBody().getType()+" has hit "+ fb.getBody().getType());
-//
-//        if(fa.getBody().getType() == BodyDef.BodyType.StaticBody){
-//            this.shootUpInAir(fa, fb);
-//        }else if(fb.getBody().getType() == BodyDef.BodyType.StaticBody) {
-//            this.shootUpInAir(fb, fa);
-//        }
+        Fixture fixtureA = contact.getFixtureA();
+        Fixture fixtureB = contact.getFixtureB();
+
+        if(fixtureA.getBody().getUserData() == "humankingsensor" && fixtureB.getBody().getUserData() == "box" ||
+           fixtureA.getBody().getUserData() == "box" && fixtureB.getBody().getUserData() == "humankingsensor") {
+            if (humanKingLogic.human_attack){
+                if (fixtureA.getBody().getUserData() == "box") {
+                    model.boxBody.remove(fixtureA.getBody());
+                    model.boxDestroyBody.add(fixtureA.getBody());
+                } else {
+                    world.destroyBody(fixtureB.getBody());
+                    model.boxDestroyBody.add(fixtureB.getBody());
+                }
+            }
+        }
     }
 
     @Override
     public void endContact(Contact contact) {
-//        System.out.println("Contact");
-//        Fixture fa = contact.getFixtureA();
-//        Fixture fb = contact.getFixtureB();
-//        if(fa.getBody().getUserData() == "IAMTHESEA"){
-//            parent.isSwimming = false;
-//            return;
-//        }else if(fb.getBody().getUserData() == "IAMTHESEA"){
-//            parent.isSwimming = false;
-//            return;
-//        }
     }
 
     @Override
@@ -70,6 +63,17 @@ public class B2dContactListener implements ContactListener {
                 contact.setEnabled(true);
             }
         }
+
+        if(fixtureA.getBody().getUserData() == "king" && fixtureB.getBody().getUserData() == "box" ||
+           fixtureA.getBody().getUserData() == "box" && fixtureB.getBody().getUserData() == "king") {
+            contact.setEnabled(false);
+        }
+
+        if(fixtureA.getBody().getUserData() == "king" && fixtureB.getBody().getUserData() == "humankingsensor" ||
+           fixtureA.getBody().getUserData() == "humankingsensor" && fixtureB.getBody().getUserData() == "king") {
+            contact.setEnabled(false);
+        }
+
     }
     @Override
     public void postSolve(Contact contact, ContactImpulse impulse) {

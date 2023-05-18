@@ -6,16 +6,15 @@ import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 
 public class BodyFactory {
     private World world;
-    public static BodyFactory thisInstance;
     private final float DEGTORAD = 0.0174533f;
     public BodyFactory(World wd){
         world = wd;
     }
 
     public static final int HUMAN = 0;
-    public static final int Bar = 1;
-    public static final int Box = 2;
-    public static final int STONE = 3;
+    public static final int BAR = 1;
+    public static final int BOX = 2;
+    public static final int SENSOR = 3;
     static public FixtureDef makeFixture(int material, Shape shape) {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -27,13 +26,13 @@ public class BodyFactory {
                 break;
             case 1:
                 fixtureDef.density = 0.5f;
-                fixtureDef.friction = 0.7f;
+                fixtureDef.friction = 0f;
                 fixtureDef.restitution = 0f;
                 break;
             case 2:
-                fixtureDef.density = 1f;
+                fixtureDef.density = 0f;
                 fixtureDef.friction = 0f;
-                fixtureDef.restitution = 1f;
+                fixtureDef.restitution = 0f;
                 break;
             case 3:
                 fixtureDef.density = 1f;
@@ -72,6 +71,9 @@ public class BodyFactory {
     }
 
     //矩形体
+    public Body makeBoxPolyBody(float posx, float posy, float width, float height,int material, BodyType bodyType){
+        return makeBoxPolyBody(posx, posy, width, height, material, bodyType, "default", false);
+    }
     public Body makeBoxPolyBody(float posx, float posy, float width, float height,int material, BodyType bodyType, String userData){
         return makeBoxPolyBody(posx, posy, width, height, material, bodyType, userData, false);
     }
@@ -130,7 +132,17 @@ public class BodyFactory {
         body.createFixture(fixtureDef);
         polygon.dispose();
     }
-    //将夹具变成传感器
+
+    public void makeSensor(Body body, Body sensor) {
+        for(Fixture fix :sensor.getFixtureList()){
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.isSensor = true;
+            fixtureDef.shape = fix.getShape();
+            body.createFixture(fixtureDef);
+            world.destroyBody(sensor);
+        }
+    }
+    // Turn to Sensor
     public void makeAllFixturesSensors(Body body){
         for(Fixture fix :body.getFixtureList()){
             fix.setSensor(true);
