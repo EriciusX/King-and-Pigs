@@ -14,9 +14,9 @@ public class GameLogic {
     private MainScreen mainScreen;
     private float delay = 0;
     public static boolean gameFinish = false;
-    public GameLogic(KeyBoardController cont, Pigsrpg pigsrpg, B2dModel md, MainScreen ms) {
-        model = md;
+    public GameLogic(KeyBoardController cont, Pigsrpg pigsrpg, MainScreen ms) {
         mainScreen = ms;
+        model = mainScreen.model;
         parent = pigsrpg;
         controller = cont;
     }

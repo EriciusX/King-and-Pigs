@@ -22,6 +22,11 @@ public class B2dModel {
     public List<Body> barBody = new ArrayList<Body>();
     public List<Body> boxBody = new ArrayList<Body>();
     public List<Body> boxDestroyBody = new ArrayList<Body>();
+    public List<Body> diamondBody = new ArrayList<Body>();
+    public List<Body> heartBody = new ArrayList<Body>();
+    public List<Body> diamondDestroyBody = new ArrayList<Body>();
+    public List<Body> heartDestroyBody = new ArrayList<Body>();
+    public List<Body> boxpieces = new ArrayList<Body>();
     private final World world;
     private Map map;
     public BodyFactory bodyFactory;

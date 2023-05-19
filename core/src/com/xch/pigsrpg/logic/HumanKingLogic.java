@@ -11,7 +11,6 @@ import com.xch.pigsrpg.core.KeyBoardController;
 import com.xch.pigsrpg.core.Pigsrpg;
 import com.xch.pigsrpg.maps.Map;
 import com.xch.pigsrpg.ui.MainScreen;
-import com.badlogic.gdx.utils.Array;
 
 public class HumanKingLogic {
     public boolean human_run = false, human_attack = false, human_jump = false, human_din = false, human_dout = true, human_fall = false, human_dead = false;
@@ -20,24 +19,20 @@ public class HumanKingLogic {
     public int human_jump_count = 0;
     private float delay = 0, jumpTimeCounter;
     public static final int HAMMERING_SOUND = 0;
+    public static final int RUN_SOUND = 1;
     public static int playerHeart = 3;
     public static int playerDiamond = 0;
     private KeyBoardController controller;
-    private Sound hammering;
-    private B2dModel model;
+    private Sound hammering, running;
     private Map map;
     private MainScreen mainScreen;
-    private BodyFactory bodyFactory;
-    private World world;
     private Body humankingSensor;
-    private Array<Body> sensorBody = new Array<Body>();
-    public HumanKingLogic (KeyBoardController cont, B2dModel md, Map mp, MainScreen ms, BodyFactory bf, World wd) {
-        model = md;
+    private B2dModel model;
+    public HumanKingLogic (KeyBoardController cont, Map mp, MainScreen ms) {
         map = mp;
         mainScreen = ms;
         controller = cont;
-        bodyFactory = bf;
-        world = wd;
+        model = mainScreen.model;
         hammering = Pigsrpg.assMan.manager.get(Pigsrpg.assMan.hammering);
     }
 
@@ -198,9 +193,10 @@ public class HumanKingLogic {
                     human_run = false;
                     human_attack = true;
                     model.humanking.setLinearVelocity(0, 0);
-                    humankingSensor = bodyFactory.makeBoxPolyBody(model.humanking.getPosition().x+34, model.humanking.getPosition().y, 30, 28, BodyFactory.SENSOR, BodyDef.BodyType.DynamicBody, "humankingsensor");
+                    // sensor
+                    humankingSensor = model.bodyFactory.makeBoxPolyBody(model.humanking.getPosition().x+34, model.humanking.getPosition().y, 30, 28, BodyFactory.SENSOR, BodyDef.BodyType.DynamicBody, "humankingsensor");
                     humankingSensor.setGravityScale(0f);
-                    bodyFactory.makeAllFixturesSensors(humankingSensor);
+                    model.bodyFactory.makeAllFixturesSensors(humankingSensor);
                 }
                 //平地状态左右跑 非跳 非攻击
                 if (!human_jump && !human_attack) {
@@ -223,6 +219,6 @@ public class HumanKingLogic {
     }
 
     public void destraySensor() {
-        world.destroyBody(humankingSensor);
+        mainScreen.world.destroyBody(humankingSensor);
     }
 }

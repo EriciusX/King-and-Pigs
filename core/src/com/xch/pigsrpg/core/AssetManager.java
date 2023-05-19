@@ -10,9 +10,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
 public class AssetManager {
     public final com.badlogic.gdx.assets.AssetManager manager = new com.badlogic.gdx.assets.AssetManager();
-    //skin
+    // Skin
     public final String skin = "UI/golden/golden-ui-skin.json";
-    //image
+    // Image
     public final String door = "door/door.atlas";
     public final String humanking = "human/humanking.atlas";
     public final String pig = "pig/pig.atlas";
@@ -24,10 +24,12 @@ public class AssetManager {
     public final String cannon = "cannon/cannon.atlas";
     public final String bomb = "cannon/bomb.atlas";
     public final String box = "box/box.atlas";
-    //background
+    // Background
     public final String loading = "loading/loading.atlas";
     // Sounds
     public final String hammering = "sound/hammering.wav";
+    public final String pick = "sound/pick.wav";
+    // Music
     public final String music = "music/Rolemusic.mp3";
     // UI
     public final String ui = "UI/golden/golden-ui-skin.atlas";
@@ -59,6 +61,8 @@ public class AssetManager {
 
     public void queueAddSounds(){
         manager.load(hammering, Sound.class);
+        manager.load(pick, Sound.class);
+
     }
 
     public void queueAddMusic(){

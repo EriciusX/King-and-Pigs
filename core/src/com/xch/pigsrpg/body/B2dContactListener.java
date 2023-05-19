@@ -18,6 +18,9 @@ public class B2dContactListener implements ContactListener {
         Fixture fixtureA = contact.getFixtureA();
         Fixture fixtureB = contact.getFixtureB();
 
+        System.out.print(fixtureA.getBody().getUserData() + " ");
+        System.out.print(fixtureB.getBody().getUserData() + "\n");
+
         if(fixtureA.getBody().getUserData() == "humankingsensor" && fixtureB.getBody().getUserData() == "box" ||
            fixtureA.getBody().getUserData() == "box" && fixtureB.getBody().getUserData() == "humankingsensor") {
             if (humanKingLogic.human_attack){
@@ -25,9 +28,31 @@ public class B2dContactListener implements ContactListener {
                     model.boxBody.remove(fixtureA.getBody());
                     model.boxDestroyBody.add(fixtureA.getBody());
                 } else {
-                    world.destroyBody(fixtureB.getBody());
+                    model.boxBody.remove(fixtureB.getBody());
                     model.boxDestroyBody.add(fixtureB.getBody());
                 }
+            }
+        }
+
+        if(fixtureA.getBody().getUserData() == "king" && fixtureB.getBody().getUserData() == "diamond" ||
+           fixtureA.getBody().getUserData() == "diamond" && fixtureB.getBody().getUserData() == "king") {
+            if (fixtureA.getBody().getUserData() == "diamond") {
+                model.diamondBody.remove(fixtureA.getBody());
+                model.diamondDestroyBody.add(fixtureA.getBody());
+            } else {
+                model.diamondBody.remove(fixtureB.getBody());
+                model.diamondDestroyBody.add(fixtureB.getBody());
+            }
+        }
+
+        if(fixtureA.getBody().getUserData() == "king" && fixtureB.getBody().getUserData() == "heart" ||
+           fixtureA.getBody().getUserData() == "heart" && fixtureB.getBody().getUserData() == "king") {
+            if (fixtureA.getBody().getUserData() == "heart") {
+                model.heartBody.remove(fixtureA.getBody());
+                model.heartDestroyBody.add(fixtureA.getBody());
+            } else {
+                model.heartBody.remove(fixtureB.getBody());
+                model.heartDestroyBody.add(fixtureB.getBody());
             }
         }
     }

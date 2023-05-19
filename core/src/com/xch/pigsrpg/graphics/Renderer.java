@@ -35,7 +35,7 @@ public class Renderer {
     }
 
     public void render (float stateTime) {
-        boxRenderer.drawBox(stateTime, sb, model);
+        boxRenderer.drawBox(stateTime, sb, model, logic);
         doorRenderer.drawDoor(stateTime, sb, logic.humanKingLogic, map.door1, map.door2);
         humanKingRenderer.drawHuman(stateTime, sb, logic.humanKingLogic, model ,mainScreen.gameState);
         hudRenderer.drawHud(stateTime, sb, logic.humanKingLogic, cam, model);

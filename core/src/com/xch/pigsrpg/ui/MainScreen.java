@@ -19,7 +19,7 @@ import com.xch.pigsrpg.maps.Map;
 
 public class MainScreen implements Screen {
     private final Pigsrpg parent;
-    private final B2dModel model;
+    public final B2dModel model;
     private final B2dContactListener listener;
     private final GameLogic gameLogic;
     protected OrthographicCamera cam;
@@ -51,11 +51,11 @@ public class MainScreen implements Screen {
         map = new Map(parent, sb);
         world = new World(new Vector2(0,-1500f), true);
         model = new B2dModel(cam, parent.assMan, world, map);
-        gameLogic = new GameLogic(controller, parent, model, this);
+        gameLogic = new GameLogic(controller, parent, this);
         debugRenderer = new Box2DDebugRenderer(true,true,true,true,true,true);
 
         // logic
-        logic = new Logic(controller, model, map, this, world);
+        logic = new Logic(controller, map, this);
 
         // renderer
         renderer = new Renderer(parent, sb, logic, map, model, this, cam);
@@ -160,7 +160,7 @@ public class MainScreen implements Screen {
     private void setGameRunning(float delta) {
         // Logic
         world.step(delta,3,3);
-        logic.AllLogic(delta);
+        logic.allLogic(delta);
         gameLogic.logicStep(delta);
     }
 

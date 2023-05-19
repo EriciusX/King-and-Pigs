@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HudRenderer {
-    private Pigsrpg parent;
+    private final Pigsrpg parent;
     private static TextureRegion livebarTex;
     private List<TextureRegion> numberTex = new ArrayList<TextureRegion>();
-    public static Animation smallheartAnimation, bigheartAnimation, heartSHitAnimation, heartBHitAnimation;
-    public static Animation smalldiamondAnimation, bigdiamondAnimation, diamondHitAnimation;
+    private final Animation smallheartAnimation, heartSHitAnimation;
+    private final Animation smalldiamondAnimation;
     private final TextureAtlas heartAtlas, diamondAtlas;
     private static TextureRegion currentFrame;
     private int playerheart_temp = 3;
@@ -28,15 +28,11 @@ public class HudRenderer {
         heartAtlas = parent.assMan.manager.get(parent.assMan.heart);
         livebarTex = heartAtlas.findRegion("livebar");
         smallheartAnimation = new Animation(0.15f, heartAtlas.findRegions("smallheart"), Animation.PlayMode.LOOP);
-        bigheartAnimation = new Animation(0.12f, heartAtlas.findRegions("bigheart"), Animation.PlayMode.LOOP);
         heartSHitAnimation = new Animation(0.1f, heartAtlas.findRegions("smallhit"), Animation.PlayMode.NORMAL);
-        heartBHitAnimation = new Animation(0.1f, heartAtlas.findRegions("bigheart"), Animation.PlayMode.NORMAL);
 
         // diamond
         diamondAtlas = parent.assMan.manager.get(parent.assMan.diamond);
         smalldiamondAnimation = new Animation(0.15f, diamondAtlas.findRegions("smalldiamond"), Animation.PlayMode.LOOP);
-        bigdiamondAnimation = new Animation(0.12f, diamondAtlas.findRegions("bigdiamond"), Animation.PlayMode.LOOP);
-        diamondHitAnimation = new Animation(0.12f, diamondAtlas.findRegions("bighit"), Animation.PlayMode.NORMAL);
         for (int i = 0; i < 10; i ++) {
             numberTex.add(diamondAtlas.findRegion(String.format("%d", i)));
         }
