@@ -24,6 +24,8 @@ public class Map {
     public MapObjects objects;
     public List<String> barName = new ArrayList<String>();
     public List<String> boxName = new ArrayList<String>();
+    public List<String> cannonName = new ArrayList<String>();
+    public List<String> pigMatchName = new ArrayList<String>();
     private List<String> objectName = new ArrayList<String>();
     public Map (Pigsrpg pigsrpg, SpriteBatch spriteBatch) {
         parent = pigsrpg;
@@ -43,9 +45,12 @@ public class Map {
         getLayerObjectName();
         separateObjectName(barName, "bar");
         separateObjectName(boxName, "box");
+        separateObjectName(cannonName, "cannon");
+        separateObjectName(pigMatchName, "pigMatch");
+        System.out.print(boxName);
 
         Walllayer = (TiledMapTileLayer) map.getLayers().get("map");
-        human = objects.get("humanking2");
+        human = objects.get("humanking");
         door1 = objects.get("door1");
         door2 = objects.get("door2");
     }

@@ -21,6 +21,7 @@ public class HudRenderer {
     private final TextureAtlas heartAtlas, diamondAtlas;
     private static TextureRegion currentFrame;
     private int playerheart_temp = 3;
+    private float stateTime, hitStateTime;
     public HudRenderer (Pigsrpg pigsrpg) {
         parent = pigsrpg;
 
@@ -36,9 +37,10 @@ public class HudRenderer {
         for (int i = 0; i < 10; i ++) {
             numberTex.add(diamondAtlas.findRegion(String.format("%d", i)));
         }
+        stateTime = 0;
     }
 
-    public void drawHud (float stateTime, SpriteBatch sb, HumanKingLogic humanKingLogic, OrthographicCamera cam, B2dModel model) {
+    public void drawHud (float delta, SpriteBatch sb, HumanKingLogic humanKingLogic, OrthographicCamera cam, B2dModel model) {
         // livebar
         float hud_x = cam.position.x - (cam.viewportWidth *parent.V_SCALE) / 2;
         float hud_y = cam.position.y + (cam.viewportHeight*parent.V_SCALE) / 3;
@@ -49,32 +51,46 @@ public class HudRenderer {
                 sb.draw(currentFrame, hud_x + 37, hud_y + 10);
             case 2:
                 if (playerheart_temp == 3 && playerheart_temp != humanKingLogic.playerHeart) {
-                    currentFrame = (TextureRegion) heartSHitAnimation.getKeyFrame(stateTime);
+                    currentFrame = (TextureRegion) heartSHitAnimation.getKeyFrame(hitStateTime);
                     sb.draw(currentFrame, hud_x + 37, hud_y + 10);
-                    if (heartSHitAnimation.isAnimationFinished(stateTime)) playerheart_temp -= 1;
+                    hitStateTime += delta;
+                    if (heartSHitAnimation.isAnimationFinished(hitStateTime)) {
+                        playerheart_temp -= 1;
+                        hitStateTime = 0;
+                    }
                 }
                 currentFrame = (TextureRegion) smallheartAnimation.getKeyFrame(stateTime);
                 sb.draw(currentFrame, hud_x + 26, hud_y + 10);
             case 1:
                 if (playerheart_temp == 2 && playerheart_temp != humanKingLogic.playerHeart) {
-                    currentFrame = (TextureRegion) heartSHitAnimation.getKeyFrame(stateTime);
+                    currentFrame = (TextureRegion) heartSHitAnimation.getKeyFrame(hitStateTime);
                     sb.draw(currentFrame, hud_x + 26, hud_y + 10);
-                    if (heartSHitAnimation.isAnimationFinished(stateTime)) playerheart_temp -= 1;
+                    hitStateTime += delta;
+                    if (heartSHitAnimation.isAnimationFinished(hitStateTime)) {
+                        playerheart_temp -= 1;
+                        hitStateTime = 0;
+                    }
                 }
                 currentFrame = (TextureRegion) smallheartAnimation.getKeyFrame(stateTime);
                 sb.draw(currentFrame, hud_x + 15, hud_y + 10);
             default:
                 if (playerheart_temp == 1 && playerheart_temp != humanKingLogic.playerHeart) {
-                    currentFrame = (TextureRegion) heartSHitAnimation.getKeyFrame(stateTime);
+                    currentFrame = (TextureRegion) heartSHitAnimation.getKeyFrame(hitStateTime);
                     sb.draw(currentFrame, hud_x + 15, hud_y + 10);
-                    if (heartSHitAnimation.isAnimationFinished(stateTime)) playerheart_temp -= 1;
+                    hitStateTime += delta;
+                    if (heartSHitAnimation.isAnimationFinished(hitStateTime)) {
+                        playerheart_temp -= 1;
+                        hitStateTime = 0;
+                    }
                 }
         }
         // diamond
         currentFrame = (TextureRegion) smalldiamondAnimation.getKeyFrame(stateTime);
         sb.draw(currentFrame, hud_x+17, hud_y-5);
+        // number
         sb.draw(numberTex.get(humanKingLogic.playerDiamond/10), hud_x+35, hud_y-1);
         sb.draw(numberTex.get(humanKingLogic.playerDiamond%10), hud_x+40, hud_y-1);
+        stateTime += delta;
     }
 
     public void reload() {

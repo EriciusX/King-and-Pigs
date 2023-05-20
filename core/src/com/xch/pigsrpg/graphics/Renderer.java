@@ -1,7 +1,9 @@
 package com.xch.pigsrpg.graphics;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.xch.pigsrpg.body.B2dModel;
 import com.xch.pigsrpg.core.Logic;
 import com.xch.pigsrpg.core.Pigsrpg;
@@ -14,6 +16,7 @@ public class Renderer {
     private HumanKingRenderer humanKingRenderer;
     private BoxRenderer boxRenderer;
     private HudRenderer hudRenderer;
+    private CannonRenderer cannonRenderer;
     private SpriteBatch sb;
     private Logic logic;
     private Map map;
@@ -32,13 +35,20 @@ public class Renderer {
         humanKingRenderer = new HumanKingRenderer(parent);
         hudRenderer = new HudRenderer(parent);
         boxRenderer = new BoxRenderer(parent);
+        cannonRenderer = new CannonRenderer(parent, this, map);
     }
 
-    public void render (float stateTime) {
-        boxRenderer.drawBox(stateTime, sb, model, logic);
-        doorRenderer.drawDoor(stateTime, sb, logic.humanKingLogic, map.door1, map.door2);
-        humanKingRenderer.drawHuman(stateTime, sb, logic.humanKingLogic, model ,mainScreen.gameState);
-        hudRenderer.drawHud(stateTime, sb, logic.humanKingLogic, cam, model);
+    public void render (float delta) {
+        boxRenderer.drawBox(delta, sb, model, logic);
+        cannonRenderer.drawCannon(delta, sb, model, logic);
+        doorRenderer.drawDoor(delta, sb, logic.humanKingLogic, map.door1, map.door2);
+        humanKingRenderer.drawHuman(delta, sb, logic.humanKingLogic, model ,mainScreen.gameState);
+        hudRenderer.drawHud(delta, sb, logic.humanKingLogic, cam, model);
+    }
+
+    public void draw (TextureRegion textureRegion, float x, float y, boolean flipX) {
+        Texture texture = textureRegion.getTexture();
+        sb.draw(textureRegion.getTexture(), x, y, texture.getWidth(), texture.getHeight(), textureRegion.getRegionX(), textureRegion.getRegionY(), texture.getWidth(), texture.getHeight(), flipX, false);
     }
 
     public void reload () {

@@ -16,6 +16,7 @@ public class BodyFactory {
     public static final int BOX = 2;
     public static final int SENSOR = 3;
     public static final int DROPPED = 4;
+    public static final int CANNONBALL = 5;
     static public FixtureDef makeFixture(int material, Shape shape) {
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
@@ -43,6 +44,11 @@ public class BodyFactory {
             case 4:
                 fixtureDef.density = 1f;
                 fixtureDef.friction = 0.5f;
+                fixtureDef.restitution = 0f;
+                break;
+            case 5:
+                fixtureDef.density = 1f;
+                fixtureDef.friction = 0f;
                 fixtureDef.restitution = 0f;
                 break;
             default:

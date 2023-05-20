@@ -1,19 +1,19 @@
 
 cannon.png
-size: 512, 32
+size: 256, 32
 format: RGBA8888
 filter: Nearest, Nearest
 repeat: none
 cannonball
   rotate: false
-  xy: 94, 2
-  size: 44, 28
-  orig: 44, 28
+  xy: 232, 16
+  size: 14, 14
+  orig: 14, 14
   offset: 0, 0
   index: -1
 idle
   rotate: false
-  xy: 232, 2
+  xy: 186, 2
   size: 44, 28
   orig: 44, 28
   offset: 0, 0
@@ -34,14 +34,14 @@ shoot
   index: 4
 shoot
   rotate: false
-  xy: 140, 2
+  xy: 94, 2
   size: 44, 28
   orig: 44, 28
   offset: 0, 0
   index: 1
 shoot
   rotate: false
-  xy: 186, 2
+  xy: 140, 2
   size: 44, 28
   orig: 44, 28
   offset: 0, 0

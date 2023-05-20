@@ -18,6 +18,7 @@ public class BoxRenderer {
     private final Animation bigdiamondAnimation, diamondHitAnimation;
     private final Animation bigheartAnimation, heartBHitAnimation;
     private TextureRegion currentFrame;
+    private float stateTime;
     public BoxRenderer (Pigsrpg pigsrpg) {
         parent = pigsrpg;
         // box
@@ -36,9 +37,10 @@ public class BoxRenderer {
         diamondAtlas =  parent.assMan.manager.get(parent.assMan.diamond);
         bigdiamondAnimation = new Animation(0.15f, diamondAtlas.findRegions("bigdiamond"), Animation.PlayMode.LOOP);
         diamondHitAnimation = new Animation(0.12f, diamondAtlas.findRegions("bighit"), Animation.PlayMode.NORMAL);
+        stateTime = 0;
     }
 
-    public void drawBox (float stateTime, SpriteBatch sb, B2dModel model, Logic logic) {
+    public void drawBox (float delta, SpriteBatch sb, B2dModel model, Logic logic) {
         // box
         for (int i = 0; i < model.boxBody.size(); i ++) {
             sb.draw(idleTex, model.boxBody.get(i).getPosition().x - 11, model.boxBody.get(i).getPosition().y - 7);
@@ -80,7 +82,7 @@ public class BoxRenderer {
             currentFrame = (TextureRegion) diamondHitAnimation.getKeyFrame(stateTime);
             sb.draw(currentFrame, model.diamondDestroyBody.get(i).getPosition().x-7, model.diamondDestroyBody.get(i).getPosition().y-7);
             if(diamondHitAnimation.isAnimationFinished(stateTime)) {
-                HumanKingLogic.playerDiamond += 1;
+                if (HumanKingLogic.playerDiamond != 99) HumanKingLogic.playerDiamond += 1;
                 logic.boxLogic.destrayDroppedObjects(model.diamondDestroyBody.get(i));
                 model.diamondDestroyBody.remove(model.diamondDestroyBody.get(i));
                 logic.boxLogic.playSound();
@@ -96,5 +98,6 @@ public class BoxRenderer {
                 logic.boxLogic.playSound();
             }
         }
+        stateTime += delta;
     }
 }

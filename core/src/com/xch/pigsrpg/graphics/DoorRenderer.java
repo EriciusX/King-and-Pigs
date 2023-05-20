@@ -12,6 +12,7 @@ public class DoorRenderer {
     private TextureRegion doorClosing, doorOpening;
     private TextureRegion currentFrame;
     public static int doorState = 0;
+    private float stateTime;
     public DoorRenderer (Pigsrpg pigsrpg) {
         Pigsrpg parent = pigsrpg;
         doorAtlas = parent.assMan.manager.get(parent.assMan.door);
@@ -19,9 +20,10 @@ public class DoorRenderer {
         doorOpening = doorAtlas.findRegion("opening");
         doorCloseAnimation = new Animation(0.5f, doorAtlas.findRegions("close"), Animation.PlayMode.NORMAL);
         doorOpenAnimation = new Animation(0.15f, doorAtlas.findRegions("open"), Animation.PlayMode.NORMAL);
+        stateTime = 0;
     }
 
-    public void drawDoor (float stateTime, SpriteBatch sb, HumanKingLogic humanKingLogic, MapObject door1, MapObject door2) {
+    public void drawDoor (float delta, SpriteBatch sb, HumanKingLogic humanKingLogic, MapObject door1, MapObject door2) {
         if (humanKingLogic.human_dout) {
             if (doorState == 0) {
                 currentFrame = (TextureRegion) doorOpenAnimation.getKeyFrame(stateTime);
@@ -66,6 +68,7 @@ public class DoorRenderer {
             sb.draw(doorClosing, (float)door1.getProperties().get("x")-14, (float)door1.getProperties().get("y"));
             sb.draw(doorClosing, (float)door2.getProperties().get("x")-14, (float)door2.getProperties().get("y"));
         }
+        stateTime += delta;
     }
 
     public void reload() {

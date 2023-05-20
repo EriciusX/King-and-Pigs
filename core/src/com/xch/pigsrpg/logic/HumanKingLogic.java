@@ -84,7 +84,7 @@ public class HumanKingLogic {
         }
     }
 
-    public void Logic(float delta) {
+    public void logic(float delta) {
         if (playerHeart != 0) {
             //下 地判断
             if (!((boolean) (map.Walllayer.getCell((int) ((model.humanking.getPosition().x - 5) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((model.humanking.getPosition().y - 18) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")))
@@ -124,7 +124,6 @@ public class HumanKingLogic {
             }
             //进门
             if ((Math.abs((model.humanking.getPosition().x) - (float) map.door2.getProperties().get("x")) <= 15) && !human_jump && !human_run && !human_din && controller.entry) {
-                mainScreen.resetStateTime();
                 model.humanking.setLinearVelocity(0, 0);
                 human_din = true;
             }
@@ -167,7 +166,7 @@ public class HumanKingLogic {
                 if (controller.jump && !human_jump) {
                     human_run = false;
                     model.humanking.setGravityScale(1f);
-                    model.humanking.applyForceToCenter(0, 6000, true);
+                    model.humanking.applyForceToCenter(0, 12000, true);
                     human_jump_count = 2;
                     controller.isSpaceDown = true;
                     jumpTimeCounter = delta * 30;
@@ -177,7 +176,7 @@ public class HumanKingLogic {
                 //跳跃高度控制 跳跃中+空格持续按下
                 if (human_jump && controller.isSpaceDown) {
                     if (jumpTimeCounter > 0) {
-                        model.humanking.applyForceToCenter(0, 6000, true);
+                        model.humanking.applyForceToCenter(0, 12000, true);
                         jumpTimeCounter -= delta;
                     }
                 }
@@ -189,7 +188,6 @@ public class HumanKingLogic {
                 //攻击
                 if ((controller.attack || (controller.attack && human_jump)) && !human_attack) {
                     playSound(0);
-                    mainScreen.resetStateTime();
                     human_run = false;
                     human_attack = true;
                     model.humanking.setLinearVelocity(0, 0);

@@ -27,6 +27,10 @@ public class B2dModel {
     public List<Body> diamondDestroyBody = new ArrayList<Body>();
     public List<Body> heartDestroyBody = new ArrayList<Body>();
     public List<Body> boxpieces = new ArrayList<Body>();
+    public List<Body> cannonBody = new ArrayList<Body>();
+    public List<Body> cannonBallBody = new ArrayList<Body>();
+    public List<Body> boomBody = new ArrayList<Body>();
+    public List<Body> pigMatchBody = new ArrayList<Body>();
     private final World world;
     private Map map;
     public BodyFactory bodyFactory;
@@ -56,8 +60,26 @@ public class B2dModel {
         // add box
         if (boxBody != null) boxBody.clear();
         for (int i = 0; i < map.boxName.size(); i ++) {
+            System.out.print(1+"\n");
             boxBody.add(bodyFactory.makeBoxPolyBody((float) map.objects.get(map.boxName.get(i)).getProperties().get("x")+11, (float) map.objects.get(map.boxName.get(i)).getProperties().get("y")+7,
                     22, 14, BodyFactory.BOX, BodyType.StaticBody, "box"));
+        }
+
+        // add pig with match
+        if (pigMatchBody != null) pigMatchBody.clear();
+        for (int i = 0; i < map.pigMatchName.size(); i ++) {
+            System.out.print(1);
+            pigMatchBody.add(bodyFactory.makeBoxPolyBody((float) map.objects.get(map.pigMatchName.get(i)).getProperties().get("x")+13, (float) map.objects.get(map.pigMatchName.get(i)).getProperties().get("y")+9,
+                    26, 18, BodyFactory.BOX, BodyType.StaticBody, "pig"));
+        }
+
+        // add cannon
+        if (cannonBody != null) cannonBody.clear();
+        for (int i = 0; i < map.cannonName.size(); i ++) {
+            Body tempBody = bodyFactory.makeBoxPolyBody((float) map.objects.get(map.cannonName.get(i)).getProperties().get("x")+22, (float) map.objects.get(map.cannonName.get(i)).getProperties().get("y")+14,
+                    44, 28, BodyFactory.BOX, BodyType.StaticBody, "cannon");
+            bodyFactory.makeAllFixturesSensors(tempBody);
+            cannonBody.add(tempBody);
         }
     }
 

@@ -14,7 +14,7 @@ public class HumanKingRenderer {
     public static Animation idleAnimation, runAnimation, attackAnimation, dinAnimation, doutAnimation, deadAnimation;
     private final TextureAtlas humanAtlas;
     private static TextureRegion currentFrame;
-    
+    private float stateTime, attackStateTime;
     public HumanKingRenderer (Pigsrpg pigsrpg) {
         Pigsrpg parent = pigsrpg;
         humanAtlas = parent.assMan.manager.get(parent.assMan.humanking);
@@ -23,13 +23,15 @@ public class HumanKingRenderer {
         downTex = humanAtlas.findRegion("Ground");
         idleAnimation = new Animation(0.12f, humanAtlas.findRegions("idle"), Animation.PlayMode.LOOP);
         runAnimation = new Animation(0.1f, humanAtlas.findRegions("run"), Animation.PlayMode.LOOP);
-        attackAnimation = new Animation(0.09f, humanAtlas.findRegions("attack"), Animation.PlayMode.NORMAL);
+        attackAnimation = new Animation(0.05f, humanAtlas.findRegions("attack"), Animation.PlayMode.NORMAL);
         dinAnimation = new Animation(0.15f, humanAtlas.findRegions("din"), Animation.PlayMode.NORMAL);
         doutAnimation = new Animation(0.15f, humanAtlas.findRegions("dout"), Animation.PlayMode.NORMAL);
         deadAnimation = new Animation(0.5f, humanAtlas.findRegions("dead"), Animation.PlayMode.NORMAL);
+        stateTime = 0;
+        attackStateTime = 0;
     }
 
-    public void drawHuman(float stateTime, SpriteBatch sb, HumanKingLogic humanKingLogic, B2dModel model, int gameState){
+    public void drawHuman(float delta, SpriteBatch sb, HumanKingLogic humanKingLogic, B2dModel model, int gameState){
         // dout
         if (humanKingLogic.human_dout) {
             if (DoorRenderer.doorState == 1) {
@@ -71,12 +73,14 @@ public class HumanKingRenderer {
         }
         // attack
         else if (humanKingLogic.human_attack) {
-            currentFrame = (TextureRegion) attackAnimation.getKeyFrame(stateTime);
+            currentFrame = (TextureRegion) attackAnimation.getKeyFrame(attackStateTime);
             sb.draw(currentFrame, model.humanking.getPosition().x - 28, model.humanking.getPosition().y - 28);
-            if(attackAnimation.isAnimationFinished(stateTime)) {
+            if (attackAnimation.isAnimationFinished(attackStateTime)) {
                 humanKingLogic.human_attack = false;
                 humanKingLogic.destraySensor();
+                attackStateTime = 0;
             }
+            attackStateTime += delta;
         }
         // din
         else if (humanKingLogic.human_din) {
@@ -108,5 +112,6 @@ public class HumanKingRenderer {
             currentFrame = (TextureRegion) idleAnimation.getKeyFrame(stateTime);
             sb.draw(currentFrame, model.humanking.getPosition().x - 28, model.humanking.getPosition().y - 28);
         }
+        stateTime += delta;
     }
 }

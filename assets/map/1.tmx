@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="16">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="17">
+ <editorsettings>
+  <export target="1..tmx" format="tmx"/>
+ </editorsettings>
  <tileset firstgid="1" source="asset/pigsrpg.tsx"/>
  <layer id="1" name="map" width="30" height="20">
   <properties>
@@ -57,15 +60,15 @@
  </layer>
  <objectgroup id="3" name="对象层 1">
   <object id="1" name="pig1" class="pig" x="490" y="580" width="34" height="28"/>
-  <object id="2" name="humanking2" class="humanking" x="263.917" y="575.938" width="32" height="32"/>
-  <object id="3" name="pig2" class="pig" x="233.909" y="419.636" width="34" height="28"/>
-  <object id="5" name="cannon2" class="cannon" x="273.667" y="419.667" width="44" height="28"/>
-  <object id="7" name="box1" class="box" x="384.5" y="591.5" width="22" height="16"/>
+  <object id="2" name="humanking" class="humanking" x="263.917" y="575.938" width="32" height="32"/>
+  <object id="3" name="pigMatchr1" class="pig_match" x="251.909" y="419.636" width="34" height="28"/>
+  <object id="5" name="cannonr1" class="cannon" x="273.667" y="419.667" width="44" height="28"/>
   <object id="9" name="door2" class="door" x="64.5" y="456" width="46" height="56"/>
   <object id="11" name="bar3x7" class="bar" x="224.25" y="447.969" width="95.5" height="6.875"/>
   <object id="12" name="bar10x7" class="bar" x="224" y="512.094" width="319.667" height="6.875"/>
   <object id="13" name="bar2x7" class="bar" x="575.562" y="544.094" width="65.3337" height="6.875"/>
   <object id="14" name="door1" class="door" x="256" y="552.25" width="46" height="56"/>
-  <object id="15" name="pig2" class="pig" x="329.727" y="483.455" width="34" height="28"/>
+  <object id="15" name="pigBomb1" class="pig_bomb" x="329.727" y="483.455" width="34" height="28"/>
+  <object id="16" name="box1" class="box" x="383" y="592" width="22" height="16"/>
  </objectgroup>
 </map>

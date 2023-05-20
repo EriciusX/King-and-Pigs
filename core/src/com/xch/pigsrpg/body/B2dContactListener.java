@@ -1,14 +1,15 @@
 package com.xch.pigsrpg.body;
 
 import com.badlogic.gdx.physics.box2d.*;
+import com.xch.pigsrpg.core.Logic;
 import com.xch.pigsrpg.logic.HumanKingLogic;
 
 public class B2dContactListener implements ContactListener {
-    private HumanKingLogic humanKingLogic;
+    private Logic logic;
     private B2dModel model;
     private World world;
-    public B2dContactListener(HumanKingLogic lgc, B2dModel md, World wd){
-        humanKingLogic = lgc;
+    public B2dContactListener(Logic lgc, B2dModel md, World wd){
+        logic = lgc;
         model = md;
         world = wd;
     }
@@ -23,7 +24,7 @@ public class B2dContactListener implements ContactListener {
 
         if(fixtureA.getBody().getUserData() == "humankingsensor" && fixtureB.getBody().getUserData() == "box" ||
            fixtureA.getBody().getUserData() == "box" && fixtureB.getBody().getUserData() == "humankingsensor") {
-            if (humanKingLogic.human_attack){
+            if (logic.humanKingLogic.human_attack){
                 if (fixtureA.getBody().getUserData() == "box") {
                     model.boxBody.remove(fixtureA.getBody());
                     model.boxDestroyBody.add(fixtureA.getBody());
@@ -32,6 +33,13 @@ public class B2dContactListener implements ContactListener {
                     model.boxDestroyBody.add(fixtureB.getBody());
                 }
             }
+        }
+
+        if(fixtureA.getBody().getUserData() == "king" && fixtureB.getBody().getUserData() == "boomSensor" ||
+           fixtureA.getBody().getUserData() == "boomSensor" && fixtureB.getBody().getUserData() == "king") {
+            HumanKingLogic.playerHeart -= 1;
+            if (fixtureA.getBody().getUserData() == "boomSensor") fixtureA.getBody().setGravityScale(0f);
+            if (fixtureB.getBody().getUserData() == "boomSensor") fixtureB.getBody().setGravityScale(0f);
         }
 
         if(fixtureA.getBody().getUserData() == "king" && fixtureB.getBody().getUserData() == "diamond" ||
@@ -81,10 +89,10 @@ public class B2dContactListener implements ContactListener {
                 platform_y = fixtureB.getBody().getPosition().y;
             }
 
-            if(player_y - 14f < platform_y || humanKingLogic.down) {
+            if(player_y - 14f < platform_y || logic.humanKingLogic.down) {
                 contact.setEnabled(false);
             } else {
-                if (humanKingLogic.human_fall) humanKingLogic.attachBar = true;
+                if (logic.humanKingLogic.human_fall) logic.humanKingLogic.attachBar = true;
                 contact.setEnabled(true);
             }
         }

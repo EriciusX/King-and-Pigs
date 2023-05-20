@@ -64,9 +64,12 @@ public class BoxLogic {
                 tempBody.applyLinearImpulse(impulse, tempBody.getWorldCenter(), true);
             }
 
-            if (!(boolean)map.Walllayer.getCell((int) ((tempBody.getPosition().x) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((tempBody.getPosition().y - 7) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")) {
+            if (!(boolean)map.Walllayer.getCell((int) ((tempBody.getPosition().x) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((tempBody.getPosition().y - 5) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")) {
                 tempBody.setGravityScale(0f);
                 tempBody.setLinearVelocity(0f, 0f);
+            } else if (!((boolean) (map.Walllayer.getCell((int) ((tempBody.getPosition().x+5) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((tempBody.getPosition().y - 5) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")))
+                    || !((boolean) (map.Walllayer.getCell((int) ((tempBody.getPosition().x-5) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((tempBody.getPosition().y - 5) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")))) {
+                tempBody.setLinearVelocity(0f, tempBody.getLinearVelocity().y);
             }
         }
 
@@ -92,6 +95,9 @@ public class BoxLogic {
             if (!(boolean)map.Walllayer.getCell((int) ((tempBody.getPosition().x) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((tempBody.getPosition().y - 7) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")) {
                 tempBody.setGravityScale(0f);
                 tempBody.setLinearVelocity(0f, 0f);
+            } else if (!((boolean) (map.Walllayer.getCell((int) ((tempBody.getPosition().x+7) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((tempBody.getPosition().y - 7) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")))
+                    || !((boolean) (map.Walllayer.getCell((int) ((tempBody.getPosition().x-7) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((tempBody.getPosition().y - 7) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")))) {
+                tempBody.setLinearVelocity(0f, tempBody.getLinearVelocity().y);
             }
         }
         // heart
@@ -115,6 +121,9 @@ public class BoxLogic {
             if (!(boolean)map.Walllayer.getCell((int) ((tempBody.getPosition().x) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((tempBody.getPosition().y - 7) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")) {
                 tempBody.setGravityScale(0f);
                 tempBody.setLinearVelocity(0f, 0f);
+            } else if (!((boolean) (map.Walllayer.getCell((int) ((tempBody.getPosition().x+7) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((tempBody.getPosition().y - 7) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")))
+                    || !((boolean) (map.Walllayer.getCell((int) ((tempBody.getPosition().x-7) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((tempBody.getPosition().y - 7) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")))) {
+                tempBody.setLinearVelocity(0f, tempBody.getLinearVelocity().y);
             }
         }
     }

@@ -64,7 +64,7 @@ public class MainScreen implements Screen {
         cam.position.x = (float) map.human.getProperties().get("x");
         cam.position.y = (float) map.human.getProperties().get("y")+96;
 
-        listener = new B2dContactListener(logic.humanKingLogic, model, world);
+        listener = new B2dContactListener(logic, model, world);
         world.setContactListener(listener);
 
         cam.zoom = Pigsrpg.V_SCALE;
@@ -95,7 +95,7 @@ public class MainScreen implements Screen {
         // Draw Sb
         sb.setProjectionMatrix(cam.combined);
         sb.begin();
-        renderer.render(stateTime);
+        renderer.render(delta);
 
         font.draw(sb, "FPS " + 1 / (delta), cam.position.x - 100, cam.position.y + 100);
         sb.end();
@@ -176,9 +176,5 @@ public class MainScreen implements Screen {
     private void setGameLevelEnd(float delta) {
         this.dispose();
         parent.changeScreen(Pigsrpg.MENU);
-    }
-
-    public void resetStateTime(){
-        stateTime = 0f;
     }
 }

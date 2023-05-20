@@ -16,9 +16,9 @@ public class AssetManager {
     public final String door = "door/door.atlas";
     public final String humanking = "human/humanking.atlas";
     public final String pig = "pig/pig.atlas";
-    public final String pig_bomb = "pig/pig&bomb.atlas";
-    public final String pig_throw = "pig/pig&throw.atlas";
-    public final String pig_match = "pig/pig&match.atlas";
+    public final String pigThrowBomb = "pig/pig&bomb.atlas";
+    public final String pigThrowBox = "pig/pig&throw.atlas";
+    public final String pigMatch = "pig/pig&match.atlas";
     public final String heart = "heart/heart.atlas";
     public final String diamond = "diamond/diamond.atlas";
     public final String cannon = "cannon/cannon.atlas";
@@ -50,9 +50,9 @@ public class AssetManager {
         manager.load(cannon, TextureAtlas.class);
 
         manager.load(pig, TextureAtlas.class);
-        manager.load(pig_bomb, TextureAtlas.class);
-        manager.load(pig_match, TextureAtlas.class);
-        manager.load(pig_throw, TextureAtlas.class);
+        manager.load(pigThrowBomb, TextureAtlas.class);
+        manager.load(pigMatch, TextureAtlas.class);
+        manager.load(pigThrowBox, TextureAtlas.class);
     }
 
     public void queueAddLoadingImages(){
