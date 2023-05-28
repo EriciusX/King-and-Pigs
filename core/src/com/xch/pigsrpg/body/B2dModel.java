@@ -1,6 +1,5 @@
 package com.xch.pigsrpg.body;
 
-import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
@@ -8,7 +7,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.xch.pigsrpg.core.AssetManager;
 import com.xch.pigsrpg.core.BodyFactory;
-import com.xch.pigsrpg.logic.HumanKingLogic;
 import com.xch.pigsrpg.maps.Map;
 
 import java.util.ArrayList;
@@ -17,8 +15,7 @@ import java.util.List;
 public class B2dModel {
     private OrthographicCamera camera;
     private final AssetManager assMan;
-    public boolean isSwimming = false;
-    public Body humanking, humankingSensor;
+    public Body humanking;
     public List<Body> barBody = new ArrayList<Body>();
     public List<Body> boxBody = new ArrayList<Body>();
     public List<Body> boxDestroyBody = new ArrayList<Body>();
@@ -30,7 +27,9 @@ public class B2dModel {
     public List<Body> cannonBody = new ArrayList<Body>();
     public List<Body> cannonBallBody = new ArrayList<Body>();
     public List<Body> boomBody = new ArrayList<Body>();
+    public List<Body> pigBody = new ArrayList<Body>();
     public List<Body> pigMatchBody = new ArrayList<Body>();
+    public List<Body> pigMatchDeadBody = new ArrayList<Body>();
     private final World world;
     private Map map;
     public BodyFactory bodyFactory;
@@ -47,7 +46,7 @@ public class B2dModel {
         bodyFactory = new BodyFactory(world);
 
         // add a player
-        humanking = bodyFactory.makeBoxPolyBody((float) map.human.getProperties().get("x"), (float) map.human.getProperties().get("y")+14, 38, 28, BodyFactory.HUMAN, BodyType.DynamicBody, "king");
+        humanking = bodyFactory.makeBoxPolyBody((float) map.human.getProperties().get("x"), (float) map.human.getProperties().get("y")+14, 24, 28, BodyFactory.HUMAN, BodyType.DynamicBody, "king");
         humanking.setBullet(true);
 
         // add bars
@@ -60,17 +59,22 @@ public class B2dModel {
         // add box
         if (boxBody != null) boxBody.clear();
         for (int i = 0; i < map.boxName.size(); i ++) {
-            System.out.print(1+"\n");
             boxBody.add(bodyFactory.makeBoxPolyBody((float) map.objects.get(map.boxName.get(i)).getProperties().get("x")+11, (float) map.objects.get(map.boxName.get(i)).getProperties().get("y")+7,
                     22, 14, BodyFactory.BOX, BodyType.StaticBody, "box"));
+        }
+
+        // add pig
+        if (pigBody != null) pigBody.clear();
+        for (int i = 0; i < map.pigName.size(); i ++) {
+            pigBody.add(bodyFactory.makeBoxPolyBody((float) map.objects.get(map.pigName.get(i)).getProperties().get("x")+13, (float) map.objects.get(map.pigName.get(i)).getProperties().get("y")+9,
+                    26, 18, BodyFactory.HUMAN, BodyType.DynamicBody, "pig"));
         }
 
         // add pig with match
         if (pigMatchBody != null) pigMatchBody.clear();
         for (int i = 0; i < map.pigMatchName.size(); i ++) {
-            System.out.print(1);
             pigMatchBody.add(bodyFactory.makeBoxPolyBody((float) map.objects.get(map.pigMatchName.get(i)).getProperties().get("x")+13, (float) map.objects.get(map.pigMatchName.get(i)).getProperties().get("y")+9,
-                    26, 18, BodyFactory.BOX, BodyType.StaticBody, "pig"));
+                    26, 18, BodyFactory.BOX, BodyType.StaticBody, "pigMatch"));
         }
 
         // add cannon

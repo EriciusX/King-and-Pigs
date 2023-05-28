@@ -50,7 +50,7 @@ public class HudRenderer {
                 currentFrame = (TextureRegion) smallheartAnimation.getKeyFrame(stateTime);
                 sb.draw(currentFrame, hud_x + 37, hud_y + 10);
             case 2:
-                if (playerheart_temp == 3 && playerheart_temp != humanKingLogic.playerHeart) {
+                if (playerheart_temp == 3 && playerheart_temp > humanKingLogic.playerHeart) {
                     currentFrame = (TextureRegion) heartSHitAnimation.getKeyFrame(hitStateTime);
                     sb.draw(currentFrame, hud_x + 37, hud_y + 10);
                     hitStateTime += delta;
@@ -62,7 +62,7 @@ public class HudRenderer {
                 currentFrame = (TextureRegion) smallheartAnimation.getKeyFrame(stateTime);
                 sb.draw(currentFrame, hud_x + 26, hud_y + 10);
             case 1:
-                if (playerheart_temp == 2 && playerheart_temp != humanKingLogic.playerHeart) {
+                if (playerheart_temp == 2 && playerheart_temp > humanKingLogic.playerHeart) {
                     currentFrame = (TextureRegion) heartSHitAnimation.getKeyFrame(hitStateTime);
                     sb.draw(currentFrame, hud_x + 26, hud_y + 10);
                     hitStateTime += delta;
@@ -74,7 +74,7 @@ public class HudRenderer {
                 currentFrame = (TextureRegion) smallheartAnimation.getKeyFrame(stateTime);
                 sb.draw(currentFrame, hud_x + 15, hud_y + 10);
             default:
-                if (playerheart_temp == 1 && playerheart_temp != humanKingLogic.playerHeart) {
+                if (playerheart_temp == 1 && playerheart_temp > humanKingLogic.playerHeart) {
                     currentFrame = (TextureRegion) heartSHitAnimation.getKeyFrame(hitStateTime);
                     sb.draw(currentFrame, hud_x + 15, hud_y + 10);
                     hitStateTime += delta;
@@ -84,6 +84,7 @@ public class HudRenderer {
                     }
                 }
         }
+        if (humanKingLogic.playerHeart > playerheart_temp) playerheart_temp = humanKingLogic.playerHeart;
         // diamond
         currentFrame = (TextureRegion) smalldiamondAnimation.getKeyFrame(stateTime);
         sb.draw(currentFrame, hud_x+17, hud_y-5);

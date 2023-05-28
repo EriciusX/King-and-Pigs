@@ -78,9 +78,9 @@ public class CannonRenderer {
                         logic.cannonLogic.pigMatchState = 0;
                     }
                     stateTime.set(1, 0f);
-                    logic.cannonLogic.destrayBody(model.boomBody.get(0));
+                    logic.destrayObjects(model.boomBody.get(0));
                     model.boomBody.remove(model.boomBody.get(0));
-                    logic.cannonLogic.destrayBody(model.cannonBallBody.get(i));
+                    logic.destrayObjects(model.cannonBallBody.get(i));
                     model.cannonBallBody.remove(model.cannonBallBody.get(i));
                 }
             }

@@ -7,9 +7,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.xch.pigsrpg.body.B2dModel;
 import com.xch.pigsrpg.core.Logic;
 import com.xch.pigsrpg.core.Pigsrpg;
-import com.xch.pigsrpg.logic.BoxLogic;
 import com.xch.pigsrpg.logic.HumanKingLogic;
-import com.xch.pigsrpg.maps.Map;
 
 public class BoxRenderer {
     private final Pigsrpg parent;
@@ -53,7 +51,7 @@ public class BoxRenderer {
 
         // dropped objects
         for (int i = 0; i < model.boxpieces.size(); i ++) {
-            switch (i) {
+            switch ((i+1)%4) {
                 case 0:
                     sb.draw(p1Tex, model.boxpieces.get(i).getPosition().x - 5, model.boxpieces.get(i).getPosition().y - 5);
                     break;
@@ -83,7 +81,7 @@ public class BoxRenderer {
             sb.draw(currentFrame, model.diamondDestroyBody.get(i).getPosition().x-7, model.diamondDestroyBody.get(i).getPosition().y-7);
             if(diamondHitAnimation.isAnimationFinished(stateTime)) {
                 if (HumanKingLogic.playerDiamond != 99) HumanKingLogic.playerDiamond += 1;
-                logic.boxLogic.destrayDroppedObjects(model.diamondDestroyBody.get(i));
+                logic.destrayObjects(model.diamondDestroyBody.get(i));
                 model.diamondDestroyBody.remove(model.diamondDestroyBody.get(i));
                 logic.boxLogic.playSound();
             }
@@ -93,7 +91,7 @@ public class BoxRenderer {
             sb.draw(currentFrame, model.heartDestroyBody.get(i).getPosition().x - 7, model.heartDestroyBody.get(i).getPosition().y - 7);
             if (heartBHitAnimation.isAnimationFinished(stateTime)) {
                 if (HumanKingLogic.playerHeart != 3) HumanKingLogic.playerHeart += 1;
-                logic.boxLogic.destrayDroppedObjects(model.heartDestroyBody.get(i));
+                logic.destrayObjects(model.heartDestroyBody.get(i));
                 model.heartDestroyBody.remove(model.heartDestroyBody.get(i));
                 logic.boxLogic.playSound();
             }

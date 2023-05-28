@@ -1,10 +1,9 @@
 package com.xch.pigsrpg.logic;
 
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.utils.Array;
 import com.xch.pigsrpg.body.B2dModel;
 import com.xch.pigsrpg.core.BodyFactory;
 import com.xch.pigsrpg.core.KeyBoardController;
@@ -13,35 +12,29 @@ import com.xch.pigsrpg.maps.Map;
 import com.xch.pigsrpg.ui.MainScreen;
 
 public class HumanKingLogic {
+    private MainScreen mainScreen;
+    private Body humankingSensor;
+    private B2dModel model;
+    private Map map;
+    private KeyBoardController controller;
+    private Sound hammering, running;
     public boolean human_run = false, human_attack = false, human_jump = false, human_din = false, human_dout = true, human_fall = false, human_dead = false;
     private boolean left = true, right = true, up = true, jump_delay = false, left_delay = false, right_delay = false;
     public boolean attachBar = false, down = false;
     public int human_jump_count = 0;
+    public boolean direction = true;
     private float delay = 0, jumpTimeCounter;
+    private int sensorOffset;
     public static final int HAMMERING_SOUND = 0;
     public static final int RUN_SOUND = 1;
     public static int playerHeart = 3;
     public static int playerDiamond = 0;
-    private KeyBoardController controller;
-    private Sound hammering, running;
-    private Map map;
-    private MainScreen mainScreen;
-    private Body humankingSensor;
-    private B2dModel model;
     public HumanKingLogic (KeyBoardController cont, Map mp, MainScreen ms) {
         map = mp;
         mainScreen = ms;
         controller = cont;
         model = mainScreen.model;
         hammering = Pigsrpg.assMan.manager.get(Pigsrpg.assMan.hammering);
-    }
-
-    public void playSound(int sound){
-        switch(sound){
-            case HAMMERING_SOUND:
-                hammering.play();
-                break;
-        }
     }
 
     private void humanRun(boolean mode, float delta) { //run:true; jump:false
@@ -162,6 +155,8 @@ public class HumanKingLogic {
             }
             // 出门后才可运动
             if (!human_dout) {
+                if (controller.left) direction = false;
+                else if (controller.right) direction = true;
                 //起跳  空格+非跳跃状态
                 if (controller.jump && !human_jump) {
                     human_run = false;
@@ -192,7 +187,9 @@ public class HumanKingLogic {
                     human_attack = true;
                     model.humanking.setLinearVelocity(0, 0);
                     // sensor
-                    humankingSensor = model.bodyFactory.makeBoxPolyBody(model.humanking.getPosition().x+34, model.humanking.getPosition().y, 30, 28, BodyFactory.SENSOR, BodyDef.BodyType.DynamicBody, "humankingsensor");
+                    if (direction) sensorOffset = 28;
+                    else sensorOffset = -28;
+                    humankingSensor = model.bodyFactory.makeBoxPolyBody(model.humanking.getPosition().x + sensorOffset, model.humanking.getPosition().y, 30, 28, BodyFactory.SENSOR, BodyDef.BodyType.DynamicBody, "humankingsensor");
                     humankingSensor.setGravityScale(0f);
                     model.bodyFactory.makeAllFixturesSensors(humankingSensor);
                 }
@@ -211,12 +208,26 @@ public class HumanKingLogic {
         left = true; right = true; up = true; down = false;
         jump_delay = false; left_delay = false; right_delay = false;
         attachBar = false;
+        direction = true;
         human_jump_count = 0; delay = 0;
 
         model.humanking.setTransform((float) map.human.getProperties().get("x"), (float) map.human.getProperties().get("y")+14, 0);
     }
 
+    public void playSound(int sound){
+        switch(sound){
+            case HAMMERING_SOUND:
+                hammering.play();
+                break;
+        }
+    }
+
     public void destraySensor() {
         mainScreen.world.destroyBody(humankingSensor);
+    }
+
+    private void judgDirection (String name, TextureRegion textureRegion) {
+        if (controller.right) textureRegion.flip(!textureRegion.isFlipX(), false);
+        if (controller.left)  textureRegion.flip(textureRegion.isFlipX(), false);
     }
 }

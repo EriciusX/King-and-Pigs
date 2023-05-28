@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="17">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="30" height="20" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="18">
  <editorsettings>
   <export target="1..tmx" format="tmx"/>
  </editorsettings>
@@ -59,7 +59,8 @@
 </data>
  </layer>
  <objectgroup id="3" name="对象层 1">
-  <object id="1" name="pig1" class="pig" x="490" y="580" width="34" height="28"/>
+  <object id="16" name="box1" class="box" x="608" y="592" width="22" height="16"/>
+  <object id="1" name="pigNormal1" class="pig" x="490" y="580" width="34" height="28"/>
   <object id="2" name="humanking" class="humanking" x="263.917" y="575.938" width="32" height="32"/>
   <object id="3" name="pigMatchr1" class="pig_match" x="251.909" y="419.636" width="34" height="28"/>
   <object id="5" name="cannonr1" class="cannon" x="273.667" y="419.667" width="44" height="28"/>
@@ -69,6 +70,6 @@
   <object id="13" name="bar2x7" class="bar" x="575.562" y="544.094" width="65.3337" height="6.875"/>
   <object id="14" name="door1" class="door" x="256" y="552.25" width="46" height="56"/>
   <object id="15" name="pigBomb1" class="pig_bomb" x="329.727" y="483.455" width="34" height="28"/>
-  <object id="16" name="box1" class="box" x="383" y="592" width="22" height="16"/>
+  <object id="17" name="box2" class="box" x="383.5" y="592" width="22" height="16"/>
  </objectgroup>
 </map>

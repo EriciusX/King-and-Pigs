@@ -13,6 +13,7 @@ import com.xch.pigsrpg.core.Pigsrpg;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.SynchronousQueue;
 
 public class Map {
     private final Pigsrpg parent;
@@ -26,6 +27,7 @@ public class Map {
     public List<String> boxName = new ArrayList<String>();
     public List<String> cannonName = new ArrayList<String>();
     public List<String> pigMatchName = new ArrayList<String>();
+    public List<String> pigName = new ArrayList<String>();
     private List<String> objectName = new ArrayList<String>();
     public Map (Pigsrpg pigsrpg, SpriteBatch spriteBatch) {
         parent = pigsrpg;
@@ -47,7 +49,8 @@ public class Map {
         separateObjectName(boxName, "box");
         separateObjectName(cannonName, "cannon");
         separateObjectName(pigMatchName, "pigMatch");
-        System.out.print(boxName);
+        separateObjectName(pigName, "pigNormal");
+        System.out.print(pigName);
 
         Walllayer = (TiledMapTileLayer) map.getLayers().get("map");
         human = objects.get("humanking");
@@ -63,7 +66,7 @@ public class Map {
     private void separateObjectName (List<String> NameList, String object) {
         if (NameList != null) NameList.clear();
 
-        for (int i = 0; i < objectName.size()-1; i++) {
+        for (int i = 0; i < objectName.size(); i++) {
             if (objectName.get(i).contains(object))
                 NameList.add(objectName.get(i));
         }
@@ -72,7 +75,7 @@ public class Map {
     private void getLayerObjectName () {
         int count = objects.getCount();
         if (objectName != null) objectName.clear();
-        for (int i = 0; i < count-1; i ++) {
+        for (int i = 0; i < count; i ++) {
             objectName.add(objects.get(i).getName());
         }
     }

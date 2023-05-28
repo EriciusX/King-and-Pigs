@@ -35,11 +35,28 @@ public class B2dContactListener implements ContactListener {
             }
         }
 
+        if(fixtureA.getBody().getUserData() == "humankingsensor" && ((String) (fixtureB.getBody().getUserData())).startsWith("pig") ||
+           ((String) (fixtureA.getBody().getUserData())).startsWith("pig") && fixtureB.getBody().getUserData() == "humankingsensor") {
+            if (logic.humanKingLogic.human_attack){
+                if (fixtureA.getBody().getUserData() == "pigMatch") {
+                    model.pigMatchBody.remove(fixtureA.getBody());
+                    model.pigMatchDeadBody.add(fixtureA.getBody());
+                } else {
+                    model.pigMatchBody.remove(fixtureB.getBody());
+                    model.pigMatchDeadBody.add(fixtureB.getBody());
+                }
+            }
+        }
+
         if(fixtureA.getBody().getUserData() == "king" && fixtureB.getBody().getUserData() == "boomSensor" ||
            fixtureA.getBody().getUserData() == "boomSensor" && fixtureB.getBody().getUserData() == "king") {
             HumanKingLogic.playerHeart -= 1;
-            if (fixtureA.getBody().getUserData() == "boomSensor") fixtureA.getBody().setGravityScale(0f);
-            if (fixtureB.getBody().getUserData() == "boomSensor") fixtureB.getBody().setGravityScale(0f);
+            if (fixtureA.getBody().getUserData() == "boomSensor") {
+                fixtureA.getBody().setGravityScale(0f);
+            }
+            if (fixtureB.getBody().getUserData() == "boomSensor") {
+                fixtureB.getBody().setGravityScale(0f);
+            }
         }
 
         if(fixtureA.getBody().getUserData() == "king" && fixtureB.getBody().getUserData() == "diamond" ||

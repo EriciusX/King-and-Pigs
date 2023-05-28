@@ -69,7 +69,8 @@ public class BoxLogic {
                 tempBody.setLinearVelocity(0f, 0f);
             } else if (!((boolean) (map.Walllayer.getCell((int) ((tempBody.getPosition().x+5) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((tempBody.getPosition().y - 5) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")))
                     || !((boolean) (map.Walllayer.getCell((int) ((tempBody.getPosition().x-5) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((tempBody.getPosition().y - 5) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")))) {
-                tempBody.setLinearVelocity(0f, tempBody.getLinearVelocity().y);
+                if (tempBody.getLinearVelocity().y < 0) tempBody.setLinearVelocity(0f, tempBody.getLinearVelocity().y);
+                else tempBody.setLinearVelocity(0f, -tempBody.getLinearVelocity().y);
             }
         }
 
@@ -97,7 +98,8 @@ public class BoxLogic {
                 tempBody.setLinearVelocity(0f, 0f);
             } else if (!((boolean) (map.Walllayer.getCell((int) ((tempBody.getPosition().x+7) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((tempBody.getPosition().y - 7) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")))
                     || !((boolean) (map.Walllayer.getCell((int) ((tempBody.getPosition().x-7) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((tempBody.getPosition().y - 7) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")))) {
-                tempBody.setLinearVelocity(0f, tempBody.getLinearVelocity().y);
+                if (tempBody.getLinearVelocity().y < 0) tempBody.setLinearVelocity(0f, tempBody.getLinearVelocity().y);
+                else tempBody.setLinearVelocity(0f, -tempBody.getLinearVelocity().y);
             }
         }
         // heart
@@ -123,16 +125,13 @@ public class BoxLogic {
                 tempBody.setLinearVelocity(0f, 0f);
             } else if (!((boolean) (map.Walllayer.getCell((int) ((tempBody.getPosition().x+7) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((tempBody.getPosition().y - 7) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")))
                     || !((boolean) (map.Walllayer.getCell((int) ((tempBody.getPosition().x-7) / 32) + (int) map.Walllayer.getProperties().get("width_min"), (int) ((tempBody.getPosition().y - 7) / 32) + (int) map.Walllayer.getProperties().get("higth_min")).getTile().getProperties().get("possible")))) {
-                tempBody.setLinearVelocity(0f, tempBody.getLinearVelocity().y);
+                if (tempBody.getLinearVelocity().y < 0) tempBody.setLinearVelocity(0f, tempBody.getLinearVelocity().y);
+                else tempBody.setLinearVelocity(0f, -tempBody.getLinearVelocity().y);
             }
         }
     }
 
     public void playSound(){
         pick.play();
-    }
-
-    public void destrayDroppedObjects(Body body) {
-        mainScreen.world.destroyBody(body);
     }
 }
